@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>THAN HUB</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <meta name="theme-color" content="#020617">
+
+  <link rel="stylesheet" href="style.css">
+
+
+<!-- 🔐 Anti-spam protection (persistent + popup) -->
+<script>
+(function () {
+  const REDIRECT_URL = "https://loot-link.com/s?VXdTXLEm";
+
+  const ACCESS_UNTIL_KEY = "than_hub_access_until";
+  const SPAM_KEY = "than_hub_spam";
+  const VERIFYING_KEY = "than_hub_verifying";
+  const LOADED_KEY = "than_hub_loaded_once";
+
+  const WINDOW = 10 * 60 * 1000; // 10 minutes
+
+  const isDev =
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.port !== "";
+
+  if (isDev) return;
+
+  const now = Date.now();
+
+  /* =================================================
+     ✅ USER RETURNED FROM VERIFICATION
+     ================================================= */
+  if (localStorage.getItem(VERIFYING_KEY) === "1") {
+    localStorage.removeItem(VERIFYING_KEY);
+    localStorage.removeItem(SPAM_KEY);
+    localStorage.setItem(ACCESS_UNTIL_KEY, now + WINDOW);
+    sessionStorage.setItem(LOADED_KEY, "true");
+    scheduleAutoReload();
+    return;
+  }
+
+  const accessUntil = Number(localStorage.getItem(ACCESS_UNTIL_KEY));
+  const isSpam = localStorage.getItem(SPAM_KEY) === "1";
+  const loadedBefore = sessionStorage.getItem(LOADED_KEY);
+
+  /* =================================================
+     🚫 USER BLOCKED BY SPAM
+     ================================================= */
+  if (isSpam && now < accessUntil) {
+    localStorage.setItem(VERIFYING_KEY, "1");
+    showPopupAndRedirect();
+    return;
+  }
+
+  /* =================================================
+     🔄 RELOAD = SPAM
+     ================================================= */
+  if (loadedBefore) {
+    localStorage.setItem(SPAM_KEY, "1");
+    localStorage.setItem(ACCESS_UNTIL_KEY, now + WINDOW);
+    localStorage.setItem(VERIFYING_KEY, "1");
+    showPopupAndRedirect();
+    return;
+  }
+
+  /* =================================================
+     ✅ NORMAL / FIRST ACCESS
+     ================================================= */
+  sessionStorage.setItem(LOADED_KEY, "true");
+
+  if (!accessUntil || now >= accessUntil) {
+    localStorage.removeItem(SPAM_KEY);
+    localStorage.setItem(ACCESS_UNTIL_KEY, now + WINDOW);
+  }
+
+  scheduleAutoReload();
+
+  /* =================================================
+     🔄 AUTO RELOAD (MOBILE FRIENDLY)
+     ================================================= */
+  function scheduleAutoReload() {
+    const until = Number(localStorage.getItem(ACCESS_UNTIL_KEY));
+    if (!until) return;
+
+    const timeLeft = until - Date.now();
+    if (timeLeft <= 0) return;
+
+setTimeout(() => {
+  document.body.innerHTML = `
+    <div class="session-overlay">
+      <div class="session-box">
+        <h2>Session Expired</h2>
+        <p>
+          For security reasons, your session has expired.<br>
+          The page will reload shortly.
+        </p>
+        <div class="session-countdown">
+          Reloading in <span id="reload-sec">3</span>s
+        </div>
+      </div>
+    </div>
+  `;
+
+  let sec = 3;
+  const el = document.getElementById("reload-sec");
+
+  const timer = setInterval(() => {
+    sec--;
+    if (el) el.textContent = sec;
+
+    if (sec <= 0) {
+  clearInterval(timer);
+
+  // mark verification flow
+  localStorage.setItem("than_hub_verifying", "1");
+
+  // redirect to Lootlabs
+  window.location.href = REDIRECT_URL;
+}
+  }, 1000);
+
+}, timeLeft + 500);
+  }
+
+  /* =================================================
+     ⚠️ VERIFICATION POPUP + REDIRECT
+     ================================================= */
+  function showPopupAndRedirect() {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.innerHTML = `
+        <div style="
+          position:fixed;
+          inset:0;
+          background:rgba(2,6,23,0.9);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          z-index:9999;
+          font-family:Arial,sans-serif;
+          padding:16px;
+        ">
+          <div style="
+            background:#020617;
+            padding:28px;
+            border-radius:18px;
+            max-width:420px;
+            width:100%;
+            text-align:center;
+            border:1px solid rgba(239,68,68,0.45);
+            box-shadow:0 0 35px rgba(239,68,68,0.6);
+            color:#e5e7eb;
+          ">
+            <h2 style="color:#ef4444;margin-bottom:10px;">
+              Verification Required
+            </h2>
+            <p style="color:#9ca3af;font-size:14px;line-height:1.5;">
+              Page reload abuse was detected.<br>
+              Verification is required to continue.
+            </p>
+            <p style="margin-top:14px;font-size:13px;color:#9ca3af;">
+              Redirecting…
+            </p>
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        window.location.href = REDIRECT_URL;
+      }, 2000);
+    });
+  }
+})();
+</script>
+
+
+</head>
+
+<script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  const start = Date.now();
+
+  const MIN_TIME = 1500;
+
+  const hideLoader = () => {
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
+    setTimeout(() => loader.remove(), 400);
+  };
+
+  const elapsed = Date.now() - start;
+  elapsed >= MIN_TIME
+    ? hideLoader()
+    : setTimeout(hideLoader, MIN_TIME - elapsed);
+});
+</script>
+
+<body>
+
+  <!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <img src="logo.png" alt="Than Hub Logo" class="logo">
+    <div>
+      <h1>THAN HUB</h1>
+      <p>Protected key system to prevent abuse</p>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE DISCORD BUTTON -->
+<div class="header-actions">
+  <a href="purchase.html" class="discord-header-btn">
+    <span>Purchase</span>
+  </a>
+
+  <a href="https://discord.gg/thanhub" target="_blank" class="discord-header-btn">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg">
+    <span>Join Discord</span>
+  </a>
+</div>
+
+</header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+<section class="howto">
+  <h2>
+    Access Options
+    <span class="online-count">
+      🟢 <span id="users">—</span> online on Discord
+    </span>
+  </h2>
+
+  <ul>
+    <li>
+      <span>•</span>
+      Choose a provider below for free access, or purchase Premium for instant access
+    </li>
+
+    <li>
+      <span>•</span>
+      Keys are protected to prevent abuse and bypassing
+    </li>
+
+    <li>
+      <span>•</span>
+      Verification is required for free access
+    </li>
+
+    <li class="premium-line">
+  <span>★</span>
+  Want instant, ad-free access?
+  <a href="purchase.html">
+    Purchase Premium
+  </a>
+</li>
+  </ul>
+</section>
+
+    <!-- KEY OPTIONS -->
+    <section class="cards">
+
+      <div class="card">
+        <h3>Work.ink</h3>
+        <p>Fast, simple, and secure verification</p>
+<button id="btn1" class="progress-btn" disabled>
+  <span class="btn-text">Please wait... (14s)</span>
+  <span class="btn-progress"></span>
+</button>
+
+      </div>
+
+      <div class="card">
+        <h3>Lootlabs</h3>
+        <p>Reliable verification with high availability</p>
+<button id="btn2" class="progress-btn" disabled>
+  <span class="btn-text">Please wait... (14s)</span>
+  <span class="btn-progress"></span>
+</button>
+      </div>
+    </section>
+
+  </main>
+
+<!-- YOUTUBE VIDEO AT BOTTOM -->
+<section class="video-section">
+  <h2 class="video-title">Feature Showcase</h2>
+
+  <div class="video-grid">
+
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/1pE2vVGBvIg"
+          title="Tutorial 1"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/K98QSncX-FE"
+          title="Tutorial 2"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe
+          src="http://youtube.com/embed/umcJ_3ByNYg"
+          title="Tutorial 3"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <div class="loader-content">
+    <img src="thanhub.gif" class="loader-gif" alt="Loading">
+    <div class="spinner"></div>
+    <p class="loading-text">Initializing secure access...</p>
+  </div>
+</div>
+
+<!--copyright-->
+<footer class="site-footer">
+  <p>© 2026 THAN HUB — Secure Access System</p>
+</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
