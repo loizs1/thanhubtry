@@ -6,7 +6,9 @@
   const VERIFYING_KEY = "than_hub_verifying";
   const LOADED_KEY = "than_hub_loaded_once";
 
-  const WINDOW = 10 * 60 * 1000; // 10 minutes
+const WINDOW = 10 * 60 * 1000; // production
+const REDIRECT_DELAY_BUFFER = 500; // safety buffer
+const COUNTDOWN_SECONDS = 3; // UX countdown
 
   const isDev =
     location.hostname === "localhost" ||
@@ -72,7 +74,7 @@ function scheduleAutoReload() {
     setTimeout(() => {
       showSessionExpiredOverlay();
       startRedirectCountdown();
-    }, timeLeft + 500);
+    }, timeLeft + REDIRECT_DELAY_BUFFER);
   }
 
   // =========================
@@ -112,7 +114,7 @@ function showSessionExpiredOverlay() {
 }
 
 function startRedirectCountdown() {
-  let sec = 3;
+  let sec = COUNTDOWN_SECONDS;
   const el = document.getElementById("reload-sec");
 
   const timer = setInterval(() => {
