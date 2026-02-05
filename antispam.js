@@ -43,17 +43,6 @@
   }
 
   /* =================================================
-     🔄 RELOAD = SPAM (OLD LOGIC)
-     ================================================= */
-  if (loadedBefore) {
-    localStorage.setItem(SPAM_KEY, "1");
-    localStorage.setItem(ACCESS_UNTIL_KEY, now + WINDOW);
-    localStorage.setItem(VERIFYING_KEY, "1");
-    showPopupAndRedirect();
-    return;
-  }
-
-  /* =================================================
      ✅ NORMAL / FIRST ACCESS
      ================================================= */
   sessionStorage.setItem(LOADED_KEY, "true");
@@ -154,4 +143,32 @@
       }, 2000);
     });
   }
+
+  (function relogControl() {
+  const COUNT_KEY = "than_hub_relog_count";
+  const TIME_KEY = "than_hub_relog_time";
+  const WINDOW = 5 * 60 * 1000; // 5 minutes
+
+  const now = Date.now();
+  const lastTime = Number(localStorage.getItem(TIME_KEY) || 0);
+
+  // Reset counter if window expired
+  if (now - lastTime > WINDOW) {
+    localStorage.setItem(COUNT_KEY, "0");
+  }
+
+  localStorage.setItem(TIME_KEY, now.toString());
+
+  let count = Number(localStorage.getItem(COUNT_KEY) || 0);
+  count++;
+  localStorage.setItem(COUNT_KEY, count.toString());
+
+  // 🚨 Allow first relog, block from second onward
+  if (count >= 3) {
+    localStorage.setItem("than_hub_spam", "1");
+    localStorage.setItem("than_hub_verifying", "1");
+    localStorage.setItem("than_hub_access_until", now + 10 * 60 * 1000);
+    showPopupAndRedirect();
+  }
+})();
 })();
