@@ -54,47 +54,79 @@
 
   scheduleAutoReload();
 
-  /* =================================================
-     🔄 AUTO RELOAD (MOBILE FRIENDLY)
-     ================================================= */
-  function scheduleAutoReload() {
-    const until = Number(localStorage.getItem(ACCESS_UNTIL_KEY));
-    if (!until) return;
+/* =================================================
+   🔄 AUTO RELOAD (DESKTOP + MOBILE SAFE)
+   ================================================= */
+function scheduleAutoReload() {
+  const until = Number(localStorage.getItem(ACCESS_UNTIL_KEY));
+  if (!until) return;
 
-    const timeLeft = until - Date.now();
-    if (timeLeft <= 0) return;
+  const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+  const timeLeft = until - Date.now();
+  if (timeLeft <= 0) return;
 
+  // =========================
+  // 🖥️ DESKTOP (Windows / macOS)
+  // =========================
+  if (!isMobile) {
     setTimeout(() => {
-      document.body.innerHTML = `
-        <div class="session-overlay">
-          <div class="session-box">
-            <h2>Session Expired</h2>
-            <p>
-              For security reasons, your session has expired.<br>
-              The page will reload shortly.
-            </p>
-            <div class="session-countdown">
-              Reloading in <span id="reload-sec">3</span>s
-            </div>
-          </div>
-        </div>
-      `;
-
-      let sec = 3;
-      const el = document.getElementById("reload-sec");
-
-      const timer = setInterval(() => {
-        sec--;
-        if (el) el.textContent = sec;
-
-        if (sec <= 0) {
-          clearInterval(timer);
-          localStorage.setItem("than_hub_verifying", "1");
-          window.location.href = REDIRECT_URL;
-        }
-      }, 1000);
+      showSessionExpiredOverlay();
+      startRedirectCountdown();
     }, timeLeft + 500);
   }
+
+  // =========================
+  // 📱 MOBILE / iOS FALLBACK
+  // =========================
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      const now = Date.now();
+      const untilNow = Number(localStorage.getItem(ACCESS_UNTIL_KEY));
+
+      if (untilNow && now > untilNow) {
+        localStorage.setItem("than_hub_verifying", "1");
+        window.location.href = REDIRECT_URL;
+      }
+    }
+  });
+}
+
+/* =========================
+   UI HELPERS (UNCHANGED LOGIC)
+   ========================= */
+function showSessionExpiredOverlay() {
+  document.body.innerHTML = `
+    <div class="session-overlay">
+      <div class="session-box">
+        <h2>Session Expired</h2>
+        <p>
+          For security reasons, your session has expired.<br>
+          The page will reload shortly.
+        </p>
+        <div class="session-countdown">
+          Reloading in <span id="reload-sec">3</span>s
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function startRedirectCountdown() {
+  let sec = 3;
+  const el = document.getElementById("reload-sec");
+
+  const timer = setInterval(() => {
+    sec--;
+    if (el) el.textContent = sec;
+
+    if (sec <= 0) {
+      clearInterval(timer);
+      localStorage.setItem("than_hub_verifying", "1");
+      window.location.href = REDIRECT_URL;
+    }
+  }, 1000);
+}
+
 
   /* =================================================
      ⚠️ VERIFICATION POPUP + REDIRECT
