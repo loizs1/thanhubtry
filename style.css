@@ -1637,3 +1637,164 @@ button {
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* ===== SCRIPT LOADER ===== */
+
+.script-box {
+  margin-top: 40px;
+  background: var(--panel);
+  border-radius: 22px;
+  padding: 36px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  text-align: center;
+}
+
+.script-box h2 {
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.script-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+
+.script-frame {
+  position: relative;
+  background: #020617;
+  border-radius: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(59,130,246,0.35);
+  box-shadow: 0 0 35px rgba(59,130,246,0.25);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  overflow: hidden;
+}
+
+.script-spacer {
+  width: 80px; /* roughly button width */
+}
+
+/* animated glow overlay */
+.script-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(59,130,246,0.25),
+    transparent
+  );
+  animation: loaderSweep 3s linear infinite;
+  pointer-events: none; /* 🔑 IMPORTANT FIX */
+}
+
+@keyframes loaderSweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* script input */
+.script-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e5e7eb;
+  font-family: monospace;
+  font-size: 13.5px;
+  text-align: center;
+  cursor: text;
+  white-space: nowrap;
+}
+
+.script-copy-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,0.45);
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: #e5e7eb;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+}
+
+
+
+.script-input::selection {
+  background: rgba(59,130,246,0.4);
+}
+
+/* copy button */
+.script-copy-btn {
+  position: relative;
+  z-index: 2;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,0.45);
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: #e5e7eb;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 16px rgba(59,130,246,0.35);
+}
+
+.script-copy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(59,130,246,0.65);
+}
+
+.script-copy-btn.copied {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: #fff;
+  box-shadow: 0 0 22px rgba(34,197,94,0.6);
+}
+
+/* =====================
+   SCRIPT LOADER — MOBILE FRIENDLY
+===================== */
+
+@media (max-width: 600px) {
+
+  .script-box {
+    padding: 22px 16px;
+  }
+
+  .script-frame {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  /* Make script readable + scrollable */
+  .script-input {
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 10px 8px;
+    text-align: left;              /* 👈 better readability */
+    overflow-x: auto;              /* 👈 allow horizontal scroll */
+    white-space: nowrap;           /* 👈 keep loadstring intact */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Bigger, thumb-friendly copy button */
+  .script-copy-btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 15px;
+    margin-top: 4px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+  .script-input {
+    font-size: 12px;
+  }
+}

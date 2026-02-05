@@ -224,4 +224,28 @@ function attachVpnPopup(buttonId, link) {
 attachVpnPopup("btn1", links.btn1);
 attachVpnPopup("btn2", links.btn2);
 
+// ===============================
+// SCRIPT LOADER COPY (ADD ONLY)
+// ===============================
+const copyBtn = document.querySelector(".script-copy-btn");
+const scriptInput = document.getElementById("scriptInput");
+
+if (copyBtn && scriptInput) {
+  copyBtn.addEventListener("click", () => {
+    scriptInput.focus();
+    scriptInput.select();
+    scriptInput.setSelectionRange(0, scriptInput.value.length);
+
+    document.execCommand("copy");
+
+    copyBtn.textContent = "Copied";
+    copyBtn.classList.add("copied");
+
+    setTimeout(() => {
+      copyBtn.textContent = "Copy";
+      copyBtn.classList.remove("copied");
+    }, 1200);
+  });
+}
+
 });
