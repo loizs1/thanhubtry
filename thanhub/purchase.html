@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THAN HUB Premium</title>
+
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<!-- QR ZOOM OVERLAY -->
+<div id="qr-zoom" class="qr-zoom hidden" onclick="closeQrZoom()">
+  <img id="qr-zoom-img" src="" alt="QR Zoom">
+</div>
+
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img src="logo.png" class="logo">
+    <div>
+      <h1>THAN HUB</h1>
+      <p>Premium Access</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="discord-header-btn">← Back</a>
+</header>
+
+<section class="pricing">
+
+  <!-- WEEKLY -->
+  <div class="price-card">
+    <h2>Weekly</h2>
+    <div class="price">$3 <span>/ week</span></div>
+
+    <ul class="features">
+      <li>💵 Payment Support: Global | IDN</li>
+      <li>⚡ Instant access (no wait)</li>
+      <li>🚫 Ad-free experience</li>
+      <li>🔑 Secure temporary key</li>
+      <li>🛡 Abuse-protected system</li>
+    </ul>
+
+    <button class="buy-btn" onclick="startPurchase('weekly')">
+      Buy Weekly
+    </button>
+  </div>
+
+  <!-- PERMANENT (FEATURED + MIDDLE) -->
+  <div class="price-card featured">
+    <h2>Permanent</h2>
+    <div class="price">$10 <span>/ lifetime</span></div>
+
+    <ul class="features">
+      <li>💵 Payment Support: Global | IDN</li>
+      <li>⚡ Access All Script and have More Features</li>
+      <li>🚫 Reset HWID without cooldown</li>
+      <li>🔒 Permanent private key</li>
+      <li>🛡 Early Update</li>
+      <li>💎 All future features included</li>
+    </ul>
+
+    <button class="buy-btn" onclick="startPurchase('lifetime')">
+      Buy Permanent
+    </button>
+  </div>
+
+  <!-- MONTHLY -->
+  <div class="price-card">
+    <h2>Monthly</h2>
+    <div class="price">$5 <span>/ month</span></div>
+
+    <ul class="features">
+      <li>💵 Payment Support: Global | IDN</li>
+      <li>⚡ Instant access every time</li>
+      <li>🚫 Completely ad-free</li>
+      <li>🔄 Auto-renewing secure key</li>
+      <li>🛡 Advanced anti-abuse protection</li>
+      <li>🎮 Priority feature updates</li>
+    </ul>
+
+    <button class="buy-btn" onclick="startPurchase('monthly')">
+      Buy Monthly
+    </button>
+  </div>
+
+</section>
+
+<footer class="site-footer">
+  © 2026 THAN HUB — Premium System
+</footer>
+
+<!-- PAYMENT LOADER -->
+<div id="pay-loader" class="pay-overlay hidden">
+  <div class="pay-box">
+    <p class="pay-loading-text">Preparing payment methods...</p>
+  </div>
+</div>
+
+<!-- PAYMENT METHODS -->
+<div id="payment-methods" class="pay-overlay hidden">
+  <div class="pay-box">
+    <h2>Select Payment Method</h2>
+
+    <p style="color:#9ca3af;font-size:13px;margin-bottom:16px;">
+      After payment, open a Discord support ticket and send proof
+    </p>
+
+    <div class="pay-methods grid">
+      <button onclick="pay('qris')">🇮🇩 QRIS</button>
+      <button onclick="pay('robux')">🎮 Robux</button>
+      <button onclick="pay('paypal')">💳 PayPal</button>
+      <button onclick="pay('ltc')">💎 Crypto</button>
+      <button onclick="pay('giftcard')">🎁 Gift Card (PayPal)</button>
+    </div>
+
+    <button class="pay-cancel" onclick="closePay()">Cancel</button>
+  </div>
+</div>
+
+<div id="payment-detail" class="pay-overlay hidden">
+  <div class="pay-box">
+    <div id="payment-content"></div>
+<button class="pay-cancel" onclick="backToMethods()">Back</button>
+  </div>
+</div>
+
+<script src="purchase.js"></script>
+</body>
+</html>
