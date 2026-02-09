@@ -1860,3 +1860,115 @@ button {
   }
 }
 
+/* =========================
+   MODERN PURCHASE TOP BAR
+========================= */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 36px; /* ⬅ BIGGER */
+
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(59,130,246,0.25);
+}
+
+/* LEFT SIDE */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-logo {
+  width: 40px;   /* was ~34 */
+  height: 40px;
+  border-radius: 10px;
+}
+
+
+.topbar-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.topbar-title {
+  font-size: 17px;   /* was ~15 */
+  font-weight: 600;
+  color: #e5e7eb;
+  letter-spacing: 0.4px;
+}
+
+.topbar-sub {
+  font-size: 12px;   /* was ~11 */
+  color: #9ca3af;
+}
+
+/* BACK BUTTON */
+.topbar-back {
+  padding: 8px 18px;   /* bigger click area */
+  font-size: 13px;
+
+  color: #e5e7eb;
+  text-decoration: none;
+
+  border-radius: 999px;
+  border: 1px solid rgba(56,189,248,0.35);
+
+  background: rgba(2, 6, 23, 0.6);
+  transition: all .2s ease;
+}
+
+
+.topbar-back:hover {
+  background: rgba(56,189,248,0.15);
+  border-color: rgba(56,189,248,0.6);
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    padding: 16px 18px;
+  }
+
+  .topbar-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .topbar-title {
+    font-size: 15px;
+  }
+}
+
+/* MOBILE TWEAK */
+@media (max-width: 600px) {
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .topbar-title {
+    font-size: 14px;
+  }
+}
+
+.pricing-wrap {
+  min-height: calc(100vh - 120px); /* header + footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pricing {
+  max-width: 1100px;
+  width: 100%;
+}

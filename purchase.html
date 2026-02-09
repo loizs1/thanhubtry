@@ -17,76 +17,80 @@
 
 <body>
 
-<header class="header">
-  <div class="header-left">
-    <img src="logo.png" class="logo">
-    <div>
-      <h1>THAN HUB</h1>
-      <p>Premium Access</p>
+<header class="topbar purchase-header">
+  <div class="topbar-left">
+    <img src="logo.png" alt="THAN HUB" class="topbar-logo">
+    <div class="topbar-text">
+      <span class="topbar-title">THAN HUB</span>
+      <span class="topbar-sub">Premium Access</span>
     </div>
   </div>
 
-  <a href="index.html" class="discord-header-btn">← Back</a>
+  <a href="index.html" class="topbar-back">
+    ← Back
+  </a>
 </header>
 
-<section class="pricing">
+<section class="pricing-wrap">
+  <div class="pricing">
 
-  <!-- WEEKLY -->
-  <div class="price-card">
-    <h2>Weekly</h2>
-    <div class="price">$3 <span>/ week</span></div>
+    <!-- WEEKLY -->
+    <div class="price-card">
+      <h2>Weekly</h2>
+      <div class="price">$3 <span>/ week</span></div>
 
-    <ul class="features">
-      <li>💵 Payment Support: Global | IDN</li>
-      <li>⚡ Instant access (no wait)</li>
-      <li>🚫 Ad-free experience</li>
-      <li>🔑 Secure temporary key</li>
-      <li>🛡 Abuse-protected system</li>
-    </ul>
+      <ul class="features">
+        <li>💵 Payment Support: Global | IDN</li>
+        <li>⚡ Instant access (no wait)</li>
+        <li>🚫 Ad-free experience</li>
+        <li>🔑 Secure temporary key</li>
+        <li>🛡 Abuse-protected system</li>
+      </ul>
 
-    <button class="buy-btn" onclick="startPurchase('weekly')">
-      Buy Weekly
-    </button>
+      <button class="buy-btn" onclick="startPurchase('weekly')">
+        Buy Weekly
+      </button>
+    </div>
+
+    <!-- PERMANENT -->
+    <div class="price-card featured">
+      <h2>Permanent</h2>
+      <div class="price">$10 <span>/ lifetime</span></div>
+
+      <ul class="features">
+        <li>💵 Payment Support: Global | IDN</li>
+        <li>⚡ Access All Script and have More Features</li>
+        <li>🚫 Reset HWID without cooldown</li>
+        <li>🔒 Permanent private key</li>
+        <li>🛡 Early Update</li>
+        <li>💎 All future features included</li>
+      </ul>
+
+      <button class="buy-btn" onclick="startPurchase('lifetime')">
+        Buy Permanent
+      </button>
+    </div>
+
+    <!-- MONTHLY -->
+    <div class="price-card">
+      <h2>Monthly</h2>
+      <div class="price">$5 <span>/ month</span></div>
+
+      <ul class="features">
+        <li>💵 Payment Support: Global | IDN</li>
+        <li>⚡ Instant access every time</li>
+        <li>🚫 Completely ad-free</li>
+        <li>🔄 Auto-renewing secure key</li>
+        <li>🛡 Advanced anti-abuse protection</li>
+        <li>🎮 Priority feature updates</li>
+      </ul>
+
+      <button class="buy-btn" onclick="startPurchase('monthly')">
+        Buy Monthly
+      </button>
+    </div>
+
   </div>
-
-  <!-- PERMANENT (FEATURED + MIDDLE) -->
-  <div class="price-card featured">
-    <h2>Permanent</h2>
-    <div class="price">$10 <span>/ lifetime</span></div>
-
-    <ul class="features">
-      <li>💵 Payment Support: Global | IDN</li>
-      <li>⚡ Access All Script and have More Features</li>
-      <li>🚫 Reset HWID without cooldown</li>
-      <li>🔒 Permanent private key</li>
-      <li>🛡 Early Update</li>
-      <li>💎 All future features included</li>
-    </ul>
-
-    <button class="buy-btn" onclick="startPurchase('lifetime')">
-      Buy Permanent
-    </button>
-  </div>
-
-  <!-- MONTHLY -->
-  <div class="price-card">
-    <h2>Monthly</h2>
-    <div class="price">$5 <span>/ month</span></div>
-
-    <ul class="features">
-      <li>💵 Payment Support: Global | IDN</li>
-      <li>⚡ Instant access every time</li>
-      <li>🚫 Completely ad-free</li>
-      <li>🔄 Auto-renewing secure key</li>
-      <li>🛡 Advanced anti-abuse protection</li>
-      <li>🎮 Priority feature updates</li>
-    </ul>
-
-    <button class="buy-btn" onclick="startPurchase('monthly')">
-      Buy Monthly
-    </button>
-  </div>
-
 </section>
 
 <footer class="site-footer">

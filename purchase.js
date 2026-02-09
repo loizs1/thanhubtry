@@ -310,3 +310,10 @@ function copyText(text, btn) {
     }, 1200);
   });
 }
+
+document.addEventListener("scroll", () => {
+  const header = document.querySelector(".purchase-header");
+  if (!header) return;
+
+  header.classList.toggle("scrolled", window.scrollY > 10);
+});

@@ -19,6 +19,10 @@
 body {
   min-height: 100vh;
   color: var(--text-main);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
   background:
     radial-gradient(circle at 20% 20%, rgba(99,102,241,0.25), transparent 40%),
     radial-gradient(circle at 80% 30%, rgba(34,211,238,0.2), transparent 45%),
@@ -353,10 +357,12 @@ body {
   .brand-name {
     font-size: 16px;
   }
+}
 
+@media (max-width: 768px) {
   .discord-btn span {
-    display: none; /* icon-only on mobile */
-  }
+    display: inline;
+  }/* icon-only on mobile */
 }
 
 
@@ -419,4 +425,70 @@ body {
   margin-top: 14px;
   font-size: 13px;
   color: var(--text-muted);
+}
+
+/* =====================
+   ANDROID / MOBILE FIXES
+===================== */
+
+@media (max-width: 600px) {
+  .container {
+    margin: 80px auto;
+    padding: 0 16px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 14px 16px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+  }
+
+  .discord-btn {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .choice-card {
+    padding: 26px;
+    border-radius: 22px;
+  }
+
+  .choice-card h2 {
+    font-size: 18px;
+  }
+
+  .choice-card p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stars {
+    display: none;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 50% 20%, rgba(99,102,241,0.2), transparent 50%),
+      linear-gradient(180deg, #020617, #05060a);
+  }
 }
