@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>THAN HUB</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <meta name="theme-color" content="#020617">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 🔐 Anti-spam protection -->
+  <script src="antispam.js" defer></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  const start = Date.now();
+
+  const MIN_TIME = 1500;
+
+  const hideLoader = () => {
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
+    setTimeout(() => loader.remove(), 400);
+  };
+
+  const elapsed = Date.now() - start;
+  elapsed >= MIN_TIME
+    ? hideLoader()
+    : setTimeout(hideLoader, MIN_TIME - elapsed);
+});
+</script>
+
+<body>
+
+<header class="header">
+  <div class="brand">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="brand-text">
+      <h1>ThanHub</h1>
+      <span>Secure Key Access</span>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <a href="purchase.html" class="nav-link">Pricing</a>
+
+    <a href="https://discord.gg/thanhub"
+       target="_blank"
+       class="primary-btn">
+      Join Discord
+    </a>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="howto">
+  <h2>
+    Access Options
+    <span class="online-count">
+      🟢 <span id="users">—</span> online on Discord
+    </span>
+  </h2>
+
+  <ul>
+    <li><span>•</span> Choose a provider below for free access, or purchase Premium for instant access</li>
+    <li><span>•</span> Keys are protected to prevent abuse and bypassing</li>
+    <li><span>•</span> Verification is required for free access</li>
+    <li class="premium-line">
+      <span>★</span>
+      Want instant, ad-free access?
+      <a href="purchase.html">Purchase Premium</a>
+    </li>
+  </ul>
+</section>
+
+<section class="script-box">
+  <h2>Thanhub Freemium Loader Script</h2>
+  <p class="script-desc">Copy and paste this into your executor</p>
+
+  <div class="script-frame">
+    <input
+      id="scriptInput"
+      class="script-input"
+      value='loadstring(game:HttpGet("https://raw.githubusercontent.com/thantzy/thanhub/refs/heads/main/thanv1"))()'
+      readonly
+    />
+
+    <button class="script-copy-btn">
+      Copy
+    </button>
+  </div>
+</section>
+
+<section class="cards">
+  <div class="card">
+    <h3>Work.ink</h3>
+    <p>Fast, simple, and secure verification</p>
+    <button id="btn1" class="progress-btn" disabled>
+      <span class="btn-text">Please wait... (14s)</span>
+      <span class="btn-progress"></span>
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>Lootlabs</h3>
+    <p>Reliable verification with high availability</p>
+    <button id="btn2" class="progress-btn" disabled>
+      <span class="btn-text">Please wait... (14s)</span>
+      <span class="btn-progress"></span>
+    </button>
+  </div>
+</section>
+
+</main>
+
+<section class="video-section">
+  <h2 class="video-title">Feature Showcase</h2>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/1pE2vVGBvIg" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/K98QSncX-FE" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://youtube.com/embed/umcJ_3ByNYg" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="loader">
+  <div class="loader-content">
+    <img src="thanhub.gif" class="loader-gif">
+    <div class="spinner"></div>
+    <p class="loading-text">Initializing secure access...</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 THAN HUB — Secure Access System</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+
+
+</html>

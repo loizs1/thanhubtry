@@ -6,6 +6,9 @@
   const VERIFYING_KEY = "than_hub_verifying";
   const LOADED_KEY = "than_hub_loaded_once";
 
+  // ✅ signal successful load (anti-spam safe)
+sessionStorage.setItem("than_hub_loaded_once", "true");
+
 const WINDOW = 10 * 60 * 1000; // production
 const REDIRECT_DELAY_BUFFER = 500; // safety buffer
 const COUNTDOWN_SECONDS = 3; // UX countdown
@@ -16,6 +19,31 @@ const COUNTDOWN_SECONDS = 3; // UX countdown
     location.port !== "";
 
   if (isDev) return;
+
+
+  // ===============================
+// 🤝 MANUAL FRIEND WHITELIST
+// ===============================
+const FRIEND_DEVICES = [
+  "friend_pc_1",
+  "my_laptop",
+];
+
+const deviceIdKey = "than_hub_device_id";
+
+if (!localStorage.getItem(deviceIdKey)) {
+  localStorage.setItem(
+    deviceIdKey,
+    "device_" + Math.random().toString(36).slice(2)
+  );
+}
+
+const deviceId = localStorage.getItem(deviceIdKey);
+
+if (FRIEND_DEVICES.includes(deviceId)) {
+  return;
+}
+
 
   const now = Date.now();
 

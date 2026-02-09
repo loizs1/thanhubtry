@@ -1,158 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KeyAccess — Secure Key System</title>
 
-  <title>THAN HUB</title>
-  <link rel="icon" type="image/png" href="logo.png">
-  <link rel="apple-touch-icon" href="logo.png">
-  <meta name="theme-color" content="#020617">
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
-
-  <!-- 🔐 Anti-spam protection -->
-  <script src="antispam.js" defer></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="landpage.css">
 </head>
 
-<script>
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const start = Date.now();
-
-  const MIN_TIME = 1500;
-
-  const hideLoader = () => {
-    loader.style.opacity = "0";
-    loader.style.pointerEvents = "none";
-    setTimeout(() => loader.remove(), 400);
-  };
-
-  const elapsed = Date.now() - start;
-  elapsed >= MIN_TIME
-    ? hideLoader()
-    : setTimeout(hideLoader, MIN_TIME - elapsed);
-});
-</script>
+<script src="landpage.js"></script>
 
 <body>
 
+    <div class="stars"></div>
+
+
 <header class="header">
-  <div class="header-left">
-    <img src="logo.png" alt="Than Hub Logo" class="logo">
-    <div>
-      <h1>THAN HUB</h1>
-      <p>Protected key system to prevent abuse</p>
-    </div>
+  <div class="brand">
+    <img src="logo.png" alt="Logo">
+    <span class="brand-name">KeyAccess</span>
   </div>
 
-<div class="header-actions">
-  <a href="purchase.html" class="discord-header-btn">
-    <span>Purchase</span>
+  <a href="https://discord.gg/thanhub" class="discord-btn">
+    <svg viewBox="0 0 245 240" aria-hidden="true">
+      <path fill="currentColor"
+        d="M104.4 104.8c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.2 0c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.2-5 10.2-11.1 0-6.1-4.5-11.1-10.2-11.1z"/>
+    </svg>
+    <span>Discord</span>
   </a>
-
-  <a href="https://discord.gg/thanhub" target="_blank" class="discord-header-btn">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg">
-    <span>Join Discord</span>
-  </a>
-</div>
 </header>
-
 <main class="container">
 
-<section class="howto">
-  <h2>
-    Access Options
-    <span class="online-count">
-      🟢 <span id="users">—</span> online on Discord
-    </span>
-  </h2>
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge">✨ Trusted Access Platform</span>
+    <h1>Secure Key Access<br>Without the Hassle</h1>
+    <p>Free verification or instant premium — you choose</p>
+<div class="trust-bar">
+  🟢 <span id="liveUsers">1,247</span> active sessions · All systems operational
+</div>
+  </section>
 
-  <ul>
-    <li><span>•</span> Choose a provider below for free access, or purchase Premium for instant access</li>
-    <li><span>•</span> Keys are protected to prevent abuse and bypassing</li>
-    <li><span>•</span> Verification is required for free access</li>
-    <li class="premium-line">
-      <span>★</span>
-      Want instant, ad-free access?
-      <a href="purchase.html">Purchase Premium</a>
-    </li>
-  </ul>
-</section>
+  <!-- CHOICES -->
+  <section class="choices">
 
-<section class="script-box">
-  <h2>Thanhub Freemium Loader Script</h2>
-  <p class="script-desc">Copy and paste this into your executor</p>
+    <a href="index.html" class="choice-card">
+      <span class="tag">FREE</span>
+      <h2>Get Free Key</h2>
+      <p>Complete verification to receive temporary access</p>
+      <span class="action">Continue →</span>
+    </a>
 
-  <div class="script-frame">
-    <input
-      id="scriptInput"
-      class="script-input"
-      value='loadstring(game:HttpGet("https://raw.githubusercontent.com/thantzy/thanhub/refs/heads/main/thanv1"))()'
-      readonly
-    />
+    <a href="purchase.html" class="choice-card premium">
+      <span class="tag premium">POPULAR</span>
+      <h2>Go Premium</h2>
+      <p>Instant access, no ads, no cooldown</p>
+      <span class="action">Upgrade →</span>
+    </a>
 
-    <button class="script-copy-btn">
-      Copy
-    </button>
-  </div>
-</section>
+  </section>
 
-<section class="cards">
-  <div class="card">
-    <h3>Work.ink</h3>
-    <p>Fast, simple, and secure verification</p>
-    <button id="btn1" class="progress-btn" disabled>
-      <span class="btn-text">Please wait... (14s)</span>
-      <span class="btn-progress"></span>
-    </button>
-  </div>
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="feature">
+      <div class="icon">🔐</div>
+      <h3>Secure System</h3>
+      <p>Protected against abuse and bypass attempts</p>
+    </div>
 
-  <div class="card">
-    <h3>Lootlabs</h3>
-    <p>Reliable verification with high availability</p>
-    <button id="btn2" class="progress-btn" disabled>
-      <span class="btn-text">Please wait... (14s)</span>
-      <span class="btn-progress"></span>
-    </button>
-  </div>
-</section>
+    <div class="feature">
+      <div class="icon">⚡</div>
+      <h3>Fast Access</h3>
+      <p>Optimized flow with minimal waiting time</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">🛡</div>
+      <h3>Trusted Platform</h3>
+      <p>Used daily by thousands of active users</p>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="social">
+    <div class="rating-box">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="score">4.9 / 5</div>
+      <p>Based on 12,400+ user reviews</p>
+    </div>
+
+    <div class="testimonials">
+      <div class="quote">“Very clean and reliable system.”</div>
+      <div class="quote">“Premium saves so much time.”</div>
+      <div class="quote">“Best key access UI I’ve seen.”</div>
+    </div>
+  </section>
 
 </main>
 
-<section class="video-section">
-  <h2 class="video-title">Feature Showcase</h2>
-  <div class="video-grid">
-    <div class="video-card">
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/1pE2vVGBvIg" allowfullscreen></iframe>
-      </div>
-    </div>
-    <div class="video-card">
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/K98QSncX-FE" allowfullscreen></iframe>
-      </div>
-    </div>
-    <div class="video-card">
-      <div class="video-wrapper">
-        <iframe src="https://youtube.com/embed/umcJ_3ByNYg" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div id="loader">
-  <div class="loader-content">
-    <img src="thanhub.gif" class="loader-gif">
-    <div class="spinner"></div>
-    <p class="loading-text">Initializing secure access...</p>
-  </div>
-</div>
-
-<footer class="site-footer">
-  <p>© 2026 THAN HUB — Secure Access System</p>
+<footer class="footer">
+  © 2026 KeyAccess — Secure Access System
 </footer>
 
-<script src="script.js"></script>
 </body>
 </html>

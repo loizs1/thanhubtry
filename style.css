@@ -2,13 +2,27 @@
    ROOT VARIABLES
 ===================== */
 :root {
-  --bg-main: linear-gradient(180deg, #020617, #000);
-  --panel: rgba(2, 6, 23, 0.75);
-  --border: rgba(59,130,246,0.25);
-  --muted: #9ca3af;
-  --accent: #3b82f6;
-  --accent-2: #22d3ee;
+  --bg-main: linear-gradient(180deg, #05060a, #020617);
+  --panel: rgba(15, 23, 42, 0.75);
+  --panel-2: rgba(30, 41, 59, 0.6);
+
+  --border: rgba(148, 163, 184, 0.12);
+
+  --text-main: #e5e7eb;
+  --text-muted: #94a3b8;
+
+  --accent: #6366f1;      /* indigo */
+  --accent-soft: rgba(99,102,241,0.15);
+  --success: #22c55e;
+  --danger: #ef4444;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
 
 /* =====================
    RESET
@@ -21,8 +35,12 @@
 }
 
 body {
-  background: var(--bg-main);
-  color: #fff;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(99,102,241,0.25), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(34,211,238,0.2), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(168,85,247,0.2), transparent 50%),
+    linear-gradient(180deg, #020617, #05060a);
+  color: var(--text-main);
 }
 
 body::after {
@@ -35,47 +53,90 @@ body::after {
 }
 
 /* =====================
-   HEADER
+   MODERN HEADER
 ===================== */
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
-  background: var(--bg-main);
-  box-shadow: 0 0 40px rgba(59,130,246,0.5);
+  padding: 28px 40px;
+  background: transparent;
 }
 
-.header-left {
+.brand {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
 }
 
 .logo {
-  width: 52px;
-  height: 52px;
-  padding: 6px;
-  border-radius: 14px;
-  background: #020617;
-  box-shadow: 0 0 12px rgba(59,130,246,0.6),
-              0 0 30px rgba(59,130,246,0.4);
-  transition: 0.3s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 
-.logo:hover {
-  box-shadow: 0 0 18px rgba(59,130,246,0.8),
-              0 0 40px rgba(59,130,246,0.6);
+.brand-text h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
-.header h1 {
-  color: var(--accent);
-  letter-spacing: 2px;
+.brand-text span {
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
-.header p {
-  color: var(--muted);
-  margin-top: 4px;
+/* =====================
+   HEADER ACTIONS
+===================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+/* Primary CTA */
+.primary-btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+  }
+
+  .brand-text span {
+    display: none;
+  }
 }
 
 /* =====================
@@ -180,19 +241,17 @@ body::after {
 /* =====================
    CARDS
 ===================== */
-.cards {
-  display: flex;
-  gap: 30px;
-  margin-top: 40px;
+.card {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 36px;
+  border: 1px solid var(--border);
 }
 
-.card {
-  flex: 1;
-  background: #020617;
-  border-radius: 18px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(59,130,246,0.3);
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
 }
 
 .card h3 {
@@ -438,17 +497,12 @@ body::after {
 
 /* PROGRESS BUTTON */
 .progress-btn {
-  position: relative;
-  width: 100%;
-  height: 48px;
-  border-radius: 12px;
-  border: none;
-  background: #1e293b;
-  color: #e5e7eb;
-  font-size: 15px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text-main);
   font-weight: 600;
-  overflow: hidden;
-  cursor: not-allowed;
 }
 
 /* progress fill */
@@ -472,8 +526,8 @@ body::after {
 
 /* READY STATE */
 .progress-btn.active {
-  background: linear-gradient(135deg, #3b82f6, #22d3ee);
-  cursor: pointer;
+  background: var(--accent);
+  color: white;
 }
 
 .progress-btn.active .btn-progress {
@@ -780,6 +834,13 @@ body::after {
 }
 
 /* ===== DESKTOP PAYMENT MODAL SIZE ===== */
+
+.modal {
+  background: #020617;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid var(--border);
+}
 
 @media (min-width: 900px) {
   .pay-box {
@@ -1798,3 +1859,4 @@ button {
     font-size: 12px;
   }
 }
+

@@ -248,4 +248,15 @@ if (copyBtn && scriptInput) {
   });
 }
 
+// 🔢 silent visit counter (via worker)
+if (!sessionStorage.getItem("visited")) {
+  sessionStorage.setItem("visited", "1");
+
+  setTimeout(() => {
+    fetch("https://thanhubworks.simlois56.workers.dev", {
+      mode: "no-cors"
+    }).catch(() => {});
+  }, 1500);
+}
+
 });
