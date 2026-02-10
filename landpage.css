@@ -17,11 +17,12 @@
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
+  font-weight: 450;
   color: var(--text-main);
-
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  padding-bottom: env(safe-area-inset-bottom);
 
   background:
     radial-gradient(circle at 20% 20%, rgba(99,102,241,0.25), transparent 40%),
@@ -30,62 +31,70 @@ body {
     linear-gradient(180deg, #020617, #05060a);
 }
 
-/* HEADER */
+@supports not (height: 100svh) {
+  body {
+    min-height: 100vh;
+  }
+}
 
-.header {
+/* =====================
+   LOGO HERO (TOP)
+===================== */
+
+/* LOGO HERO CONTAINER */
+.logo-hero {
+  margin-bottom: 12px;   /* control spacing manually */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 28px 40px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* LOGO IMAGE */
+.logo-hero img {
+  width: 220px;                 /* was 120px */
+  max-width: 45vw;              /* responsive */
+  height: auto;
+  filter: drop-shadow(0 0 36px rgba(99,102,241,0.55));
+
+  background: none;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 40px rgba(99,102,241,0.55))
+    drop-shadow(0 0 80px rgba(34,211,238,0.25));
 }
 
-.brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-}
-
-.brand span {
+/* BRAND NAME UNDER LOGO */
+.logo-name {
+  margin-top: 4px;       /* was too large */
+  margin-bottom: 6px;    /* pulls headline up */
+  font-size: 14px;
+  letter-spacing: 3px;   /* tighter */
   font-weight: 700;
-  font-size: 18px;
+  color: #67e8f9;
 }
 
-.header-actions {
-  display: flex;
-  gap: 16px;
-}
-
-.ghost-btn {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.primary-btn {
-  background: var(--accent);
-  color: white;
-  text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-/* MAIN */
+/* =====================
+   MAIN CONTAINER
+===================== */
 
 .container {
   max-width: 1100px;
-  margin: 120px auto;
+  margin: 24px auto 80px;
   padding: 0 24px;
   text-align: center;
 }
 
-/* HERO */
+/* =====================
+   HERO
+===================== */
+
+.hero {
+  padding: 16px 0 28px;   /* much tighter */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .badge {
   display: inline-block;
@@ -96,6 +105,16 @@ body {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 18px;
+}
+
+.hero h1 {
+  margin-top: 4px;       /* VERY IMPORTANT */
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
 .hero h1 {
@@ -110,13 +129,25 @@ body {
   color: var(--text-muted);
 }
 
-/* CHOICES */
+.hero + .choices {
+  margin-top: 24px;
+}
+
+.trust-bar {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* =====================
+   CHOICES
+===================== */
 
 .choices {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 28px;
-  margin: 70px 0;
+  margin: 32px 0 56px;
 }
 
 .choice-card {
@@ -130,19 +161,6 @@ body {
   color: var(--text-main);
   transition: transform 0.25s ease, border-color 0.25s ease;
   overflow: hidden;
-}
-
-.choice-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(99,102,241,0.2), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.choice-card:hover::before {
-  opacity: 1;
 }
 
 .choice-card:hover {
@@ -182,7 +200,9 @@ body {
   color: white;
 }
 
-/* FEATURES */
+/* =====================
+   FEATURES
+===================== */
 
 .features {
   display: grid;
@@ -215,7 +235,9 @@ body {
   margin-bottom: 14px;
 }
 
-/* SOCIAL */
+/* =====================
+   SOCIAL
+===================== */
 
 .social {
   margin-top: 80px;
@@ -261,180 +283,265 @@ body {
   color: var(--text-muted);
 }
 
-/* FOOTER */
-
-.footer {
-  text-align: center;
-  padding: 24px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-
-
 /* =====================
-   MODERN HEADER
+   FAQ
 ===================== */
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.faq-section {
+  max-width: 900px;
+  margin: 120px auto;
+  padding: 0 24px;
+  text-align: center;
+}
 
+.faq-section h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.faq-section h2 span {
+  color: var(--accent);
+}
+
+.faq-sub {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+.faq-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 14px;
+  backdrop-filter: blur(18px);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 18px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 22px 40px;
-
-  background: rgba(2, 6, 23, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-/* BRAND */
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand img {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  object-fit: contain;
-}
-
-.brand-name {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-/* DISCORD BUTTON */
-
-.discord-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px 16px;
-  border-radius: 999px;
-
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.35);
-
-  color: #e5e7eb;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-
-  transition: all 0.2s ease;
-}
-
-.discord-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.discord-btn:hover {
-  background: rgba(99, 102, 241, 0.25);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.45);
-  transform: translateY(-1px);
-}
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-  .header {
-    padding: 18px 20px;
-  }
-
-  .brand-name {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .discord-btn span {
-    display: inline;
-  }/* icon-only on mobile */
-}
-
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 34px;
-  }
-
-  .header {
-    padding: 20px;
-  }
-}
-
-/* Header scroll state */
-.header.scrolled {
-  background: rgba(2, 6, 23, 0.85);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-/* Page entrance */
-.hero,
-.choice-card,
-.feature,
-.rating-box {
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 0.8s ease forwards;
-}
-
-.choice-card { animation-delay: 0.2s; }
-.feature { animation-delay: 0.4s; }
-.rating-box { animation-delay: 0.6s; }
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.get-started {
-  margin-top: 28px;
-  padding: 14px 28px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  color: white;
-  font-size: 15px;
-  font-weight: 700;
   cursor: pointer;
 }
 
-.get-started:hover {
-  box-shadow: 0 0 30px rgba(99,102,241,0.6);
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 0 14px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
 }
 
-.trust-bar {
-  margin-top: 14px;
-  font-size: 13px;
-  color: var(--text-muted);
+.faq-item.active .faq-answer {
+  max-height: 200px;
+  padding-bottom: 18px;
 }
 
 /* =====================
-   ANDROID / MOBILE FIXES
+   FOOTER
 ===================== */
 
+.footer {
+  width: 100%;
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: rgba(229, 231, 235, 0.75);
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* =========================
+   PILL ITEMS
+========================= */
+
+.pill-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom));
+
+  display: flex;
+  gap: 10px;
+
+  padding: 10px;
+  padding-bottom: env(safe-area-inset-bottom);
+
+  border-radius: 999px;
+  background: rgba(15,23,42,0.7);
+  backdrop-filter: blur(18px);
+  z-index: 50;
+}
+
+.pill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  height: 46px;
+  padding: 0 14px;
+  max-width: 46px;
+
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  overflow: hidden;
+  cursor: pointer;
+  transition: max-width 0.35s ease, background 0.25s ease;
+}
+
+.pill-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.pill-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #67e8f9;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ACTIVE STATE */
+.pill-item.active {
+  max-width: 160px;
+  background: rgba(103,232,249,0.15);
+  box-shadow: 0 0 18px rgba(103,232,249,0.35);
+}
+
+.pill-item.active .pill-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hover reveal animation */
+.pill-item:hover .pill-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Allow hover expansion */
+.pill-item:hover {
+  max-width: 160px;
+}
+
+.pill-item:hover {
+  box-shadow: 0 0 12px rgba(103,232,249,0.25);
+}
+
+
+
+/* =====================
+   MOBILE
+===================== */
+
+@media (hover: none) {
+  .pill-item {
+    transition: background 0.25s ease;
+  }
+
+  .pill-item:hover {
+    max-width: 46px;
+    box-shadow: none;
+  }
+
+  .pill-item:hover .pill-label {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+
+
+
 @media (max-width: 600px) {
+  .pill-item {
+    height: 40px;
+    max-width: 40px;
+  }
+
+  .pill-item.active {
+    max-width: 140px;
+  }
+
+  .pill-item:not(.active) .pill-label {
+    display: none;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .logo-name {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    letter-spacing: 2.5px;
+  }
+
+  .hero h1 {
+    margin-top: 2px;
+    font-size: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .logo-hero img {
+    width: 150px;
+  }
+
+  .logo-name {
+    font-size: 13px;
+    letter-spacing: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .choices {
+    margin: 24px 0 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-hero {
+    height: 150px;
+  }
+
   .container {
-    margin: 80px auto;
+    margin: 16px auto 60px;
     padding: 0 16px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 12px;
   }
 
   .hero h1 {
@@ -450,45 +557,27 @@ body {
     font-size: 12px;
     padding: 5px 12px;
   }
-}
 
-@media (max-width: 600px) {
-  .header {
-    padding: 14px 16px;
-  }
-
-  .brand-name {
-    font-size: 15px;
-  }
-
-  .discord-btn {
-    padding: 8px 12px;
-  }
-}
-
-@media (max-width: 600px) {
   .choice-card {
     padding: 26px;
     border-radius: 22px;
   }
 
-  .choice-card h2 {
-    font-size: 18px;
-  }
-
-  .choice-card p {
-    font-size: 14px;
+  .stars {
+    display: none;
   }
 }
 
 @media (max-width: 600px) {
-  .stars {
-    display: none;
+  .pill-nav,
+  .faq-card {
+    backdrop-filter: blur(10px);
   }
 
-  body {
-    background:
-      radial-gradient(circle at 50% 20%, rgba(99,102,241,0.2), transparent 50%),
-      linear-gradient(180deg, #020617, #05060a);
+  .logo-hero img {
+    filter:
+      drop-shadow(0 0 20px rgba(99,102,241,0.45));
   }
 }
+
+

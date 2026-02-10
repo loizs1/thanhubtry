@@ -3,44 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Thanhub-Official Website
-  </title>
 
-  <!-- FONT -->
+  <title>ThanHub — Secure Key Access</title>
+
+  <!-- Favicon (auto-bump only) -->
+  <link rel="icon" type="image/png" href="logo.png?v=__BUILD__">
+  <link rel="apple-touch-icon" href="logo.png?v=__BUILD__">
+
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="landpage.css">
+  <link rel="stylesheet" href="landpage.css?v=__BUILD__">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ThanHub — Secure Key Access">
+  <meta property="og:description" content="Secure, fast, and trusted key access platform.">
+  <meta property="og:url" content="https://thanhub.site">
 </head>
-
-<script src="landpage.js"></script>
-
 <body>
 
     <div class="stars"></div>
 
-
-<header class="header">
-  <div class="brand">
-    <img src="logo.png" alt="Logo">
-    <span class="brand-name">Thanhub</span>
-  </div>
-
-  <a href="https://discord.gg/thanhub" class="discord-btn">
-    <svg viewBox="0 0 245 240" aria-hidden="true">
-      <path fill="currentColor"
-        d="M104.4 104.8c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.2 0c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.2-5 10.2-11.1 0-6.1-4.5-11.1-10.2-11.1z"/>
-    </svg>
-    <span>Discord</span>
-  </a>
-</header>
 <main class="container">
 
   <!-- HERO -->
+<section id="home" class="logo-hero">
+  <img src="thanhublogo.png" alt="ThanHub Logo">
+  <span class="logo-name">THANHUB</span>
+</section>
   <section class="hero">
-    <span class="badge">✨ Trusted Access Platform</span>
     <h1>Secure Key Access<br>Without the Hassle</h1>
     <p>Free verification or instant premium — you choose</p>
 <div class="trust-bar">
@@ -104,10 +99,88 @@
   </section>
 
 </main>
+<section id="faq" class="faq-section">
+  <h2>Frequently Asked <span>Questions</span></h2>
+  <p class="faq-sub">Find answers to common questions about ThanHub</p>
+
+  <div class="faq-card">
+
+    <div class="faq-item active">
+      <button class="faq-question">
+        What is ThanHub?
+        <span class="arrow">⌃</span>
+      </button>
+      <div class="faq-answer">
+        ThanHub is a secure script key access platform that lets you safely
+        unlock and manage scripts with anti-abuse protection.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is ThanHub safe to use?
+        <span class="arrow">⌃</span>
+      </button>
+      <div class="faq-answer">
+        Yes. ThanHub uses HWID protection, cooldowns, and abuse prevention
+        systems to keep keys secure.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I get a key?
+        <span class="arrow">⌃</span>
+      </button>
+      <div class="faq-answer">
+        You can get a free key through verification or unlock instant access
+        with a premium plan.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I get support?
+        <span class="arrow">⌃</span>
+      </button>
+      <div class="faq-answer">
+        Join our Discord server for announcements, updates, and direct support.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<nav class="pill-nav">
+  <!-- HOME (scroll) -->
+  <button class="pill-item active" data-target="home" type="button">
+    <span class="icon">🏠</span>
+    <span class="label">Home</span>
+  </button>
+
+  <!-- PRICING (redirect) -->
+  <a class="pill-item" href="purchase.html">
+    <span class="icon">💳</span>
+    <span class="label">Pricing</span>
+  </a>
+
+  <!-- FAQ (scroll) -->
+  <button class="pill-item" data-target="faq" type="button">
+    <span class="icon">❓</span>
+    <span class="label">FAQ</span>
+  </button>
+
+  <!-- RESELLERS (scroll later) -->
+  <button class="pill-item" data-target="resellers" type="button">
+    <span class="icon">👥</span>
+    <span class="label">Resellers</span>
+  </button>
+</nav>
 
 <footer class="footer">
-  © 2026 KeyAccess — Secure Access System
+  © 2026 ThanHub — Secure Access System
 </footer>
-
+<script src="landpage.js?v=__BUILD__"></script>
 </body>
+
 </html>

@@ -1,29 +1,60 @@
-// =====================
-// HEADER SCROLL EFFECT
-// =====================
+// PILL CLICK LOGIC
+document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
+  pill.addEventListener('click', e => {
+    e.preventDefault(); // stop jump
 
-document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector(".header");
+    document.querySelectorAll('.pill-item')
+      .forEach(p => p.classList.remove('active'));
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 10) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
+    pill.classList.add('active');
+
+    const section = document.getElementById(pill.dataset.target);
+    if (section) {
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   });
+});
 
-  // =====================
-  // LIVE USER COUNTER
-  // =====================
+// FAQ ACCORDION
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
 
-  const liveUsers = document.getElementById("liveUsers");
-  if (liveUsers) {
-    let base = 1247;
+    document.querySelectorAll('.faq-item')
+      .forEach(i => i !== item && i.classList.remove('active'));
 
-    setInterval(() => {
-      base += Math.floor(Math.random() * 3 - 1);
-      liveUsers.textContent = base.toLocaleString();
-    }, 4000);
-  }
+    item.classList.toggle('active');
+  });
+});
+
+/* =========================
+   AUTO-ACTIVE PILL ON SCROLL
+========================= */
+
+const sections = ['home', 'faq', 'resellers'];
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.pill-item')
+          .forEach(p => p.classList.remove('active'));
+
+        const activePill = document.querySelector(
+          `.pill-item[data-target="${entry.target.id}"]`
+        );
+
+        if (activePill) activePill.classList.add('active');
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
+
+sections.forEach(id => {
+  const section = document.getElementById(id);
+  if (section) observer.observe(section);
 });
