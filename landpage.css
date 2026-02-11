@@ -391,16 +391,19 @@ background-attachment: fixed;
   transform: translateX(-50%);
   bottom: 32px;
 
-  display: flex;
-  gap: 14px;
+  display: inline-flex;   /* 🔥 change from flex */
+  gap: 12px;
 
-  padding: 10px 18px;
+  padding: 10px 16px;
   border-radius: 999px;
 
   background: rgba(15,23,42,0.7);
   backdrop-filter: blur(18px);
   z-index: 50;
+
+  width: fit-content;     /* 🔥 important */
 }
+
 
 .pill-item {
   display: flex;
