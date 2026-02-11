@@ -78,7 +78,9 @@ const observer = new IntersectionObserver(
 
     });
   },
-  { threshold: 0.6 }
+  {
+    rootMargin: "-40% 0px -40% 0px"
+  }
 );
 
 sections.forEach(id => {
