@@ -556,6 +556,29 @@ a, button {
    MOBILE
 ===================== */
 
+/* =========================
+   MOBILE ICON-ONLY NAV
+========================= */
+
+@media (max-width: 768px) {
+
+  .pill-item {
+    width: 46px !important;
+    height: 46px;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .pill-item.active {
+    width: 46px !important;
+  }
+
+  .pill-label {
+    display: none !important;
+  }
+
+}
+
+
 @media (hover: hover) {
   .pill-item:hover {
     width: 150px;
