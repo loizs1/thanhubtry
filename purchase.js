@@ -326,20 +326,28 @@ document.addEventListener("scroll", () => {
 
 let lastScroll = 0;
 const returnBtn = document.querySelector(".return-home");
+const scrollThreshold = 10; // ignore tiny scrolls
 
 window.addEventListener("scroll", () => {
   if (!returnBtn) return;
 
-  const currentScroll = window.scrollY;
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  const diff = currentScroll - lastScroll;
 
-  if (currentScroll > lastScroll) {
+  // Ignore tiny movements (mobile bounce fix)
+  if (Math.abs(diff) < scrollThreshold) return;
+
+  if (diff > 0) {
+    // scrolling down
     returnBtn.style.opacity = "0";
+    returnBtn.style.pointerEvents = "none";
   } else {
+    // scrolling up
     returnBtn.style.opacity = "1";
+    returnBtn.style.pointerEvents = "auto";
   }
 
-  lastScroll = currentScroll;
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
 });
-
 
 
