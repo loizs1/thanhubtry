@@ -391,38 +391,40 @@ background-attachment: fixed;
   transform: translateX(-50%);
   bottom: 32px;
 
-  display: inline-flex;   /* 🔥 change from flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
 
   padding: 10px 16px;
   border-radius: 999px;
 
-  background: rgba(15,23,42,0.7);
+  background: rgba(15,23,42,0.75);
   backdrop-filter: blur(18px);
-  z-index: 50;
+  -webkit-backdrop-filter: blur(18px);
 
-  width: fit-content;     /* 🔥 important */
+  width: auto;
+  z-index: 50;
 }
 
 
 .pill-item {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 
   height: 46px;
-  flex: 0 0 46px;
+  min-width: 46px;
+  padding: 0 14px;
 
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.08);
 
-  overflow: hidden;
   cursor: pointer;
+  overflow: hidden;
 
-  transition: flex-basis 0.35s cubic-bezier(.4,0,.2,1),
-              background 0.25s ease,
-              box-shadow 0.25s ease;
+  transition: all 0.35s cubic-bezier(.4,0,.2,1);
 }
 
 .pill-item {
@@ -443,15 +445,10 @@ background-attachment: fixed;
   color: inherit;
 }
 
-.pill-item {
-  contain: layout paint;
-}
-
 /* icon */
 .pill-icon {
-  min-width: 46px;
-  height: 46px;
-  flex: 0 0 46px; /* lock icon size */
+  width: 22px;
+  height: 22px;
 
   display: flex;
   align-items: center;
@@ -469,18 +466,19 @@ background-attachment: fixed;
 }
 
 .pill-label {
-  opacity: 0;
   margin-left: 8px;
   white-space: nowrap;
-  transition: opacity 0.2s ease;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
+
 
 /* ACTIVE STATE */
 .pill-item.active {
-  flex-basis: 150px;
   background: rgba(103,232,249,0.15);
   box-shadow: 0 0 18px rgba(103,232,249,0.35);
 }
+
 
 .pill-item.active .pill-label {
   opacity: 1;
@@ -699,23 +697,19 @@ a, button {
 
 /* Mobile & Tablet icon-only mode */
 @media (max-width: 1024px) {
-  
-    .pill-nav {
-    gap: 10px;          /* reduce spacing */
-    padding: 8px 14px;  /* tighter frame */
+
+  .pill-nav {
+    gap: 10px;
+    padding: 8px 14px;
   }
 
   .pill-item {
-    flex-basis: 46px;
-  }
-
-  .pill-item.active {
-    flex-basis: 46px;
+    min-width: 46px;
+    padding: 0;
   }
 
   .pill-label {
     display: none;
   }
-
 }
 
