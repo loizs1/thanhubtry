@@ -122,7 +122,7 @@ async function loadDiscordOnline() {
 }
 
 loadDiscordOnline();                // run once on load
-setInterval(loadOnlineCount, 30 * 1000); // refresh every 30 seconds
+setInterval(loadDiscordOnline, 30 * 1000); // refresh every 30 seconds
 
 
 function showVpnWarning(onContinue, onCancel) {
@@ -260,20 +260,50 @@ const scriptInput = document.getElementById("scriptInput");
 
 if (copyBtn && scriptInput) {
   copyBtn.addEventListener("click", () => {
-    scriptInput.focus();
-    scriptInput.select();
-    scriptInput.setSelectionRange(0, scriptInput.value.length);
 
-    document.execCommand("copy");
+    const text = scriptInput.value;
 
-    copyBtn.textContent = "Copied";
-    copyBtn.classList.add("copied");
+    // Modern browsers (Windows + Android + iOS Safari 16+)
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text)
+        .then(() => showCopied())
+        .catch(() => fallbackCopy(text));
+    } else {
+      // Older iOS / insecure context fallback
+      fallbackCopy(text);
+    }
 
-    setTimeout(() => {
-      copyBtn.textContent = "Copy";
-      copyBtn.classList.remove("copied");
-    }, 1200);
   });
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+
+  textarea.focus();
+  textarea.select();
+
+  try {
+    document.execCommand("copy");
+    showCopied();
+  } catch (err) {
+    alert("Copy failed. Please copy manually.");
+  }
+
+  document.body.removeChild(textarea);
+}
+
+function showCopied() {
+  copyBtn.textContent = "Copied";
+  copyBtn.classList.add("copied");
+
+  setTimeout(() => {
+    copyBtn.textContent = "Copy";
+    copyBtn.classList.remove("copied");
+  }, 1200);
 }
 
 // 🔢 silent visit counter (via worker)

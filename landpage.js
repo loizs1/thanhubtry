@@ -1,7 +1,14 @@
+// =========================
 // PILL CLICK LOGIC
+// =========================
+
+let isManualScroll = false;
+
 document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
   pill.addEventListener('click', e => {
     e.preventDefault(); // stop jump
+
+    isManualScroll = true; // prevent observer conflict
 
     document.querySelectorAll('.pill-item')
       .forEach(p => p.classList.remove('active'));
@@ -9,16 +16,26 @@ document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
     pill.classList.add('active');
 
     const section = document.getElementById(pill.dataset.target);
+
     if (section) {
       section.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
     }
+
+    // Unlock observer after scroll settles
+    setTimeout(() => {
+      isManualScroll = false;
+    }, 900); // slightly longer than scroll animation
   });
 });
 
+
+// =========================
 // FAQ ACCORDION
+// =========================
+
 document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.parentElement;
@@ -30,16 +47,19 @@ document.querySelectorAll('.faq-question').forEach(btn => {
   });
 });
 
-/* =========================
-   AUTO-ACTIVE PILL ON SCROLL
-========================= */
+
+// =========================
+// AUTO-ACTIVE PILL ON SCROLL
+// =========================
 
 const sections = ['home', 'faq', 'resellers'];
 
 const observer = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+
+      if (entry.isIntersecting && !isManualScroll) {
+
         document.querySelectorAll('.pill-item')
           .forEach(p => p.classList.remove('active'));
 
@@ -49,15 +69,17 @@ const observer = new IntersectionObserver(
 
         if (activePill) activePill.classList.add('active');
       }
+
     });
   },
-  { threshold: 0.5 }
+  { threshold: 0.6 } // slightly more stable than 0.5
 );
 
 sections.forEach(id => {
   const section = document.getElementById(id);
   if (section) observer.observe(section);
 });
+
 
 // =====================
 // DISCORD LIVE COUNT
@@ -76,9 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
 
       if (onlineEl && data.approximate_presence_count) {
-      const onlineCount = Number(data.approximate_presence_count);
-
-      animateCount(onlineEl, onlineCount, 1400);
+        const onlineCount = Number(data.approximate_presence_count);
+        animateCount(onlineEl, onlineCount, 1400);
       }
 
     } catch {
@@ -90,6 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(loadOnlineCount, 30 * 1000);
 });
 
+
+// =====================
+// COUNT ANIMATION
+// =====================
 
 function animateCount(el, target, duration = 1200) {
   let start = 0;
