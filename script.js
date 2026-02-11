@@ -1,5 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const loader = document.getElementById("loader");
+  const returnHome = document.getElementById("returnHome");
+
+  // SAFETY
+  if (returnHome) returnHome.classList.add("hidden");
+
+  // ⏱ minimum loader time (important for mobile)
+  const MIN_LOAD_TIME = 1800; // 1.8s (feels premium)
+  const startTime = Date.now();
+
+  function finishLoading() {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
+
+    setTimeout(() => {
+      if (loader) loader.style.display = "none";
+
+      // show return home AFTER loader fully gone
+      if (returnHome) {
+        returnHome.classList.remove("hidden");
+      }
+    }, remaining);
+  }
+
+  // Wait for EVERYTHING (images, fonts, css)
+  window.addEventListener("load", finishLoading);
+
+// links
   const links = {
     btn1: "https://ads.luarmor.net/get_key?for=ThanHub_Workink-UUxSglryLPaR",
     btn2: "https://ads.luarmor.net/get_key?for=ThanHub_Lootlabs-FrqLLIeTOAdT"
@@ -94,7 +122,7 @@ async function loadDiscordOnline() {
 }
 
 loadDiscordOnline();                // run once on load
-setInterval(loadDiscordOnline, 5 * 60 * 1000); // refresh every 5 min
+setInterval(loadOnlineCount, 30 * 1000); // refresh every 30 seconds
 
 
 function showVpnWarning(onContinue, onCancel) {
@@ -259,4 +287,21 @@ if (!sessionStorage.getItem("visited")) {
   }, 1500);
 }
 
+});
+
+let lastScroll = 0;
+const returnBtn = document.querySelector(".return-home");
+
+window.addEventListener("scroll", () => {
+  if (!returnBtn) return;
+
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll) {
+    returnBtn.style.opacity = "0";
+  } else {
+    returnBtn.style.opacity = "1";
+  }
+
+  lastScroll = currentScroll;
 });

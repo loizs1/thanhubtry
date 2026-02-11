@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,23 +45,10 @@ window.addEventListener("load", () => {
 
 <body>
 
-<header class="header">
-  <div class="brand">
-    <img src="logo.png" alt="Logo" class="logo">
-    <div class="brand-text">
-      <h1>ThanHub</h1>
-      <span>Secure Key Access</span>
-    </div>
-  </div>
-
-  <div class="header-actions">
-    <a href="https://discord.gg/thanhub"
-       target="_blank"
-       class="primary-btn">
-      Join Discord
-    </a>
-  </div>
-</header>
+  <a href="index.html" class="return-home hidden" id="returnHome">
+  <span class="arrow">←</span>
+  <span class="text">Return Home</span>
+</a>
 
 <main class="container">
 
@@ -68,18 +56,30 @@ window.addEventListener("load", () => {
   <h2>
     Access Options
     <span class="online-count">
-      🟢 <span id="users">—</span> online on Discord
+      🟢 <span id="users">—</span> users online
     </span>
   </h2>
 
   <ul>
-    <li><span>•</span> Choose a provider below for free access, or purchase Premium for instant access</li>
-    <li><span>•</span> Keys are protected to prevent abuse and bypassing</li>
-    <li><span>•</span> Verification is required for free access</li>
+    <li>
+      <span>⚡</span>
+      Choose a verification provider below for <b>free limited access</b>
+    </li>
+
+    <li>
+      <span>🛡</span>
+      All keys are protected with anti-abuse & anti-bypass systems
+    </li>
+
+    <li>
+      <span>🔒</span>
+      Verification is required to generate a temporary access key
+    </li>
+
     <li class="premium-line">
-      <span>★</span>
-      Want instant, ad-free access?
-      <a href="purchase.html">Purchase Premium</a>
+      <span>🚀</span>
+      Prefer instant, ad-free access?
+      <a href="purchase.html">Upgrade to Premium</a>
     </li>
   </ul>
 </section>

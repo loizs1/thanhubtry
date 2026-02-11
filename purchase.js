@@ -3,6 +3,8 @@ function startPurchase(plan) {
   window.orderId = generateOrderId();
 
   document.body.style.overflow = "hidden";
+    const returnBtn = document.querySelector(".return-home");
+  if (returnBtn) returnBtn.classList.add("hidden"); // 👈 ADD THIS
 
   document.getElementById("pay-loader").classList.remove("hidden");
 
@@ -10,6 +12,7 @@ function startPurchase(plan) {
     document.getElementById("pay-loader").classList.add("hidden");
     document.getElementById("payment-methods").classList.remove("hidden");
   }, 1000);
+
 }
 
 
@@ -21,6 +24,9 @@ function closePay() {
   if (loader) loader.classList.add("hidden");
   if (methods) methods.classList.add("hidden");
   if (detail) detail.classList.add("hidden");
+
+  const returnBtn = document.querySelector(".return-home");
+  if (returnBtn) returnBtn.classList.remove("hidden"); // 👈 ADD THIS
 
   document.body.style.overflow = "";
 
@@ -317,3 +323,23 @@ document.addEventListener("scroll", () => {
 
   header.classList.toggle("scrolled", window.scrollY > 10);
 });
+
+let lastScroll = 0;
+const returnBtn = document.querySelector(".return-home");
+
+window.addEventListener("scroll", () => {
+  if (!returnBtn) return;
+
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll) {
+    returnBtn.style.opacity = "0";
+  } else {
+    returnBtn.style.opacity = "1";
+  }
+
+  lastScroll = currentScroll;
+});
+
+
+

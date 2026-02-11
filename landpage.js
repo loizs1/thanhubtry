@@ -58,3 +58,56 @@ sections.forEach(id => {
   const section = document.getElementById(id);
   if (section) observer.observe(section);
 });
+
+// =====================
+// DISCORD LIVE COUNT
+// =====================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inviteCode = "thanhub";
+  const onlineEl = document.getElementById("discordTotal");
+
+  async function loadOnlineCount() {
+    try {
+      const res = await fetch(
+        `https://discord.com/api/v9/invites/${inviteCode}?with_counts=true`
+      );
+
+      const data = await res.json();
+
+      if (onlineEl && data.approximate_presence_count) {
+      const onlineCount = Number(data.approximate_presence_count);
+
+      animateCount(onlineEl, onlineCount, 1400);
+      }
+
+    } catch {
+      if (onlineEl) onlineEl.textContent = "—";
+    }
+  }
+
+  loadOnlineCount();
+  setInterval(loadOnlineCount, 30 * 1000);
+});
+
+
+function animateCount(el, target, duration = 1200) {
+  let start = 0;
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    const value = Math.floor(progress * target);
+    el.textContent = value.toLocaleString();
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target.toLocaleString();
+    }
+  }
+
+  requestAnimationFrame(update);
+}
