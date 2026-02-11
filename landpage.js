@@ -18,16 +18,22 @@ document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
     const section = document.getElementById(pill.dataset.target);
 
     if (section) {
-      section.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+
+      // ---- MOBILE SAFE OFFSET SCROLL FIX ----
+      const spacing = 20; // visual spacing from top
+      const elementPosition = section.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - spacing;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
     }
 
-    // Unlock observer after scroll settles
+    // Unlock observer after scroll finishes
     setTimeout(() => {
       isManualScroll = false;
-    }, 900); // slightly longer than scroll animation
+    }, 900);
   });
 });
 
@@ -72,7 +78,7 @@ const observer = new IntersectionObserver(
 
     });
   },
-  { threshold: 0.6 } // slightly more stable than 0.5
+  { threshold: 0.6 }
 );
 
 sections.forEach(id => {
@@ -117,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // =====================
 
 function animateCount(el, target, duration = 1200) {
-  let start = 0;
   const startTime = performance.now();
 
   function update(currentTime) {
