@@ -3,6 +3,7 @@
 // =========================
 
 let isManualScroll = false;
+let scrollTimeout; // used to detect scroll stop
 
 document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
   pill.addEventListener('click', e => {
@@ -29,12 +30,22 @@ document.querySelectorAll('.pill-item[data-target]').forEach(pill => {
         behavior: 'smooth'
       });
     }
-
-    // Unlock observer after scroll finishes
-    setTimeout(() => {
-      isManualScroll = false;
-    }, 900);
   });
+});
+
+
+// =========================
+// GLOBAL SCROLL STOP DETECTOR (FIX)
+// =========================
+
+window.addEventListener('scroll', () => {
+  if (!isManualScroll) return;
+
+  clearTimeout(scrollTimeout);
+
+  scrollTimeout = setTimeout(() => {
+    isManualScroll = false;
+  }, 120); // unlock only after scrolling fully stops
 });
 
 
@@ -79,7 +90,8 @@ const observer = new IntersectionObserver(
     });
   },
   {
-    rootMargin: "-40% 0px -40% 0px"
+  threshold: 0,
+  rootMargin: "-100px 0px -60% 0px"
   }
 );
 
