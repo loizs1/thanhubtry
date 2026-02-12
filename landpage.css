@@ -413,8 +413,8 @@ background-attachment: fixed;
   justify-content: center;
 
   height: 46px;
-  min-width: 46px;
-  padding: 0 14px;
+  width: 46px;               /* FIXED CIRCLE */
+  flex: 0 0 46px;
 
   border-radius: 999px;
   background: rgba(255,255,255,0.06);
@@ -423,7 +423,9 @@ background-attachment: fixed;
   cursor: pointer;
   overflow: hidden;
 
-  transition: all 0.35s cubic-bezier(.4,0,.2,1);
+  transition: width 0.35s cubic-bezier(.4,0,.2,1),
+              background 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 .pill-item {
@@ -473,7 +475,10 @@ background-attachment: fixed;
 
 /* ACTIVE STATE */
 .pill-item.active {
-  min-width: 140px;
+  width: 140px;              /* EXPAND ONLY ACTIVE */
+  justify-content: flex-start;
+  padding-left: 16px;
+
   background: rgba(103,232,249,0.15);
   box-shadow: 0 0 18px rgba(103,232,249,0.35);
 }
@@ -570,8 +575,10 @@ a, button {
 /* DESKTOP + iPad (mouse devices) */
 @media (pointer: fine) {
 
-  .pill-item:hover {
-    min-width: 140px;
+   .pill-item:hover {
+    width: 140px;
+    justify-content: flex-start;
+    padding-left: 16px;
     box-shadow: 0 0 12px rgba(103,232,249,0.25);
   }
 
@@ -582,18 +589,14 @@ a, button {
 
 /* PHONES (touch devices) */
 @media (pointer: coarse) {
-
-  .pill-item {
-    min-width: 46px;
-    padding: 0;
-  }
-
-  .pill-item.active {
-    min-width: 46px;
-  }
-
   .pill-label {
     display: none;
+  }
+
+  .pill-item,
+  .pill-item.active {
+    width: 46px;
+    padding: 0;
   }
 }
 
