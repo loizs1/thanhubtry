@@ -566,11 +566,10 @@ a, button {
    MOBILE
 ===================== */
 
-/* =========================
-   MOBILE ICON-ONLY NAV
-========================= */
 
-@media (hover: hover) and (pointer: fine) {
+/* DESKTOP + iPad (mouse devices) */
+@media (pointer: fine) {
+
   .pill-item:hover {
     min-width: 140px;
     box-shadow: 0 0 12px rgba(103,232,249,0.25);
@@ -581,23 +580,22 @@ a, button {
   }
 }
 
-@media (hover: none) {
+/* PHONES (touch devices) */
+@media (pointer: coarse) {
+
   .pill-item {
-    transition: background 0.25s ease;
+    min-width: 46px;
+    padding: 0;
   }
 
-  .pill-item:hover {
-    max-width: 46px;
-    box-shadow: none;
+  .pill-item.active {
+    min-width: 46px;
   }
 
-  .pill-item:hover .pill-label {
-    opacity: 0;
-    transform: translateX(-6px);
+  .pill-label {
+    display: none;
   }
 }
-
-
 
 @media (max-width: 600px) {
 
@@ -691,24 +689,6 @@ a, button {
   .logo-hero img {
     filter:
       drop-shadow(0 0 20px rgba(99,102,241,0.45));
-  }
-}
-
-
-/* PHONE ONLY */
-@media (max-width: 600px) {
-
-  .pill-item {
-    min-width: 46px;
-    padding: 0;
-  }
-
-  .pill-item.active {
-    min-width: 46px;
-  }
-
-  .pill-label {
-    display: none;
   }
 }
 
