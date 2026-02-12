@@ -391,18 +391,27 @@ background-attachment: fixed;
   transform: translateX(-50%);
   bottom: 32px;
 
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   gap: 14px;
-
   padding: 10px 18px;
-  border-radius: 999px;
 
+  border-radius: 999px;
   background: rgba(15,23,42,0.7);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  width: fit-content;
+  max-width: 90vw;
+
   z-index: 50;
 }
 
 .pill-item {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -417,22 +426,11 @@ background-attachment: fixed;
   overflow: hidden;
   cursor: pointer;
 
-  transition: flex-basis 0.35s cubic-bezier(.4,0,.2,1),
-              background 0.25s ease,
-              box-shadow 0.25s ease;
-}
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
 
-.pill-item {
-  position: relative;
-  text-decoration: none;   /* remove underline */
-  color: inherit;          /* inherit text color */
-  font: inherit;           /* same font as buttons */
-  z-index: 1;
-}
-
-.pill-item:hover,
-.pill-item.active {
-  z-index: 5;
+  transition: all 0.35s cubic-bezier(.4,0,.2,1);
 }
 
 .pill-item:link,
@@ -448,14 +446,13 @@ background-attachment: fixed;
 .pill-icon {
   min-width: 46px;
   height: 46px;
-  flex: 0 0 46px; /* lock icon size */
+  flex: 0 0 46px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   font-size: 20px;
-  line-height: 1;
 }
 
 .pill-icon span,
@@ -473,10 +470,12 @@ background-attachment: fixed;
 }
 
 /* ACTIVE STATE */
+.pill-item:hover,
 .pill-item.active {
   flex-basis: 150px;
   background: rgba(103,232,249,0.15);
   box-shadow: 0 0 18px rgba(103,232,249,0.35);
+  z-index: 5;
 }
 
 .pill-item.active .pill-label {
@@ -498,6 +497,10 @@ background-attachment: fixed;
 }
 
 
+.pill-item:hover .pill-label,
+.pill-item.active .pill-label {
+  opacity: 1;
+}
 
 
 /* Discord button*/
@@ -580,19 +583,675 @@ a, button {
   }
 }
 
-@media (hover: none) {
-  .pill-item {
-    transition: background 0.25s ease;
+
+@media (max-width: 600px) {
+  .logo-name {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    letter-spacing: 2.5px;
   }
 
+  .hero h1 {
+    margin-top: 2px;
+    font-size: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .logo-hero img {
+    width: 150px;
+  }
+
+  .logo-name {
+    font-size: 13px;
+    letter-spacing: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .choices {
+    margin: 24px 0 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-hero {
+    height: 150px;
+  }
+
+  .container {
+    margin: 16px auto 60px;
+    padding: 0 16px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 12px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .choice-card {
+    padding: 26px;
+    border-radius: 22px;
+  }
+
+  .stars {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .pill-nav {
+    bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+
+  .faq-card {
+    backdrop-filter: blur(10px);
+  }
+
+  .logo-hero img {
+    filter:
+      drop-shadow(0 0 20px rgba(99,102,241,0.45));
+  }
+}
+
+
+/* Mobile & Tablet icon-only mode */
+/* Phone only (true small devices) */
+:root {
+  --panel: rgba(15, 23, 42, 0.75);
+  --border: rgba(148, 163, 184, 0.15);
+
+  --text-main: #e5e7eb;
+  --text-muted: #94a3b8;
+
+  --accent: #6366f1;
+  --accent-soft: rgba(99,102,241,0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  min-height: 100svh;
+  overscroll-behavior: none;
+  font-weight: 450;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+background:
+  radial-gradient(circle at 20vw 20vh, rgba(99,102,241,0.25), transparent 40%),
+  radial-gradient(circle at 80vw 30vh, rgba(34,211,238,0.2), transparent 45%),
+  radial-gradient(circle at 50vw 70vh, rgba(168,85,247,0.15), transparent 55%),
+  linear-gradient(180deg, #020617, #05060a);
+
+background-attachment: fixed;
+}
+
+@supports not (height: 100svh) {
+  body {
+    min-height: 100vh;
+  }
+}
+
+/* =====================
+   LOGO HERO (TOP)
+===================== */
+
+/* LOGO HERO CONTAINER */
+.logo-hero {
+  margin-bottom: 12px;   /* control spacing manually */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* LOGO IMAGE */
+.logo-hero img {
+  width: 220px;                 /* was 120px */
+  max-width: 45vw;              /* responsive */
+  height: auto;
+  filter: drop-shadow(0 0 36px rgba(99,102,241,0.55));
+
+  background: none;
+  object-fit: contain;
+  will-change: transform;
+
+  filter:
+    drop-shadow(0 0 40px rgba(99,102,241,0.55))
+    drop-shadow(0 0 80px rgba(34,211,238,0.25));
+}
+
+/* BRAND NAME UNDER LOGO */
+.logo-name {
+  margin-top: 4px;       /* was too large */
+  margin-bottom: 6px;    /* pulls headline up */
+  font-size: 14px;
+  letter-spacing: 3px;   /* tighter */
+  font-weight: 700;
+  color: #67e8f9;
+}
+
+/* =====================
+   MAIN CONTAINER
+===================== */
+
+.container {
+  max-width: 1100px;
+  margin: 24px auto 80px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+/* =====================
+   HERO
+===================== */
+
+.hero {
+  padding: 16px 0 28px;   /* much tighter */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  margin-top: 4px;       /* VERY IMPORTANT */
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.hero + .choices {
+  margin-top: 24px;
+}
+
+.trust-bar {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* =====================
+   CHOICES
+===================== */
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin: 32px 0 56px;
+}
+
+.choice-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  padding: 36px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.choice-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.choice-card h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.choice-card p {
+  color: var(--text-muted);
+  margin-bottom: 22px;
+}
+
+.action {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.tag {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.15);
+  color: var(--text-muted);
+}
+
+.choice-card.premium .tag {
+  background: var(--accent);
+  color: white;
+}
+
+/* =====================
+   FEATURES
+===================== */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin: 80px 0;
+}
+
+.feature {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 28px;
+  text-align: left;
+  transition: transform 0.25s ease;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+/* =====================
+   SOCIAL
+===================== */
+
+.social {
+  margin-top: 80px;
+}
+
+.rating-box {
+  display: inline-block;
+  padding: 24px 32px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  margin-bottom: 28px;
+}
+
+.stars {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.score {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.rating-box p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.testimonials {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quote {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px 22px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* =====================
+   FAQ
+===================== */
+
+.faq-section {
+  max-width: 900px;
+  margin: 120px auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.faq-section h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.faq-section h2 span {
+  color: var(--accent);
+}
+
+.faq-sub {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+.faq-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 14px;
+  backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 18px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 0 14px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 200px;
+  padding-bottom: 18px;
+}
+
+/* =====================
+   FOOTER
+===================== */
+
+.footer {
+  width: 100%;
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: rgba(229, 231, 235, 0.75);
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* =========================
+   PILL ITEMS
+========================= */
+
+.pill-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+  padding: 10px 18px;
+
+  border-radius: 999px;
+  background: rgba(15,23,42,0.7);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  width: fit-content;
+  max-width: 90vw;
+
+  z-index: 50;
+}
+
+.pill-item {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 46px;
+  flex: 0 0 46px;
+
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  overflow: hidden;
+  cursor: pointer;
+
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+
+  transition: all 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+.pill-item:link,
+.pill-item:visited {
+  color: inherit;
+}
+
+.pill-item {
+  contain: layout paint;
+}
+
+/* icon */
+.pill-icon {
+  min-width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+}
+
+.pill-icon span,
+.pill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-label {
+  opacity: 0;
+  margin-left: 8px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+/* ACTIVE STATE */
+.pill-item:hover,
+.pill-item.active {
+  flex-basis: 150px;
+  background: rgba(103,232,249,0.15);
+  box-shadow: 0 0 18px rgba(103,232,249,0.35);
+  z-index: 5;
+}
+
+.pill-item.active .pill-label {
+  opacity: 1;
+}
+
+.pill-item.active .pill-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hover reveal animation */
+.pill-item:hover .pill-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+.pill-item:hover {
+  box-shadow: 0 0 12px rgba(103,232,249,0.25);
+}
+
+
+.pill-item:hover .pill-label,
+.pill-item.active .pill-label {
+  opacity: 1;
+}
+
+
+/* Discord button*/
+.discord-pill {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+
+  text-decoration: none;
+  color: #c7d2fe;
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow:
+    0 0 24px rgba(99,102,241,0.25),
+    inset 0 0 12px rgba(99,102,241,0.15);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.discord-pill:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 32px rgba(99,102,241,0.45),
+    inset 0 0 14px rgba(99,102,241,0.25);
+}
+
+.discord-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discord-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.discord-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.8);
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+/* =========================
+   MOBILE ICON-ONLY NAV
+========================= */
+
+@media (hover: hover) and (pointer: fine) {
   .pill-item:hover {
-    max-width: 46px;
-    box-shadow: none;
+    flex-basis: 150px;
   }
 
   .pill-item:hover .pill-label {
-    opacity: 0;
-    transform: translateX(-6px);
+    opacity: 1;
   }
 }
 
@@ -600,7 +1259,12 @@ a, button {
 
 @media (max-width: 600px) {
 
-  .pill-item:not(.active) .pill-label {
+  .pill-item,
+  .pill-item.active {
+    flex-basis: 46px;
+  }
+
+  .pill-label {
     display: none;
   }
 
@@ -696,12 +1360,9 @@ a, button {
 
 /* Mobile & Tablet icon-only mode */
 /* Phone only (true small devices) */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 
-  .pill-item {
-    flex-basis: 46px;
-  }
-
+  .pill-item,
   .pill-item.active {
     flex-basis: 46px;
   }
@@ -710,4 +1371,8 @@ a, button {
     display: none;
   }
 
+  .pill-nav {
+    bottom: calc(20px + env(safe-area-inset-bottom));
+  }
 }
+
