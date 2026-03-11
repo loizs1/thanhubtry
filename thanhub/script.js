@@ -210,6 +210,14 @@ function attachVpnPopup(buttonId, link) {
       e.preventDefault();
       e.stopImmediatePropagation();
 
+      // Popup ads logic: redirect to cloudemulator for first 2 clicks
+      if (shouldRedirectPopup()) {
+        const currentCount = incrementPopupClickCount();
+        window.open(POPUP_URL, "_blank", "noopener,noreferrer");
+        // Continue to normal link as well
+      }
+
+      // Show VPN warning for the normal flow
       showVpnWarning(() => {
         btn.disabled = true;
         btn.style.pointerEvents = "none";
@@ -223,5 +231,23 @@ function attachVpnPopup(buttonId, link) {
 
 attachVpnPopup("btn1", links.btn1);
 attachVpnPopup("btn2", links.btn2);
+
+// popup ads configuration
+const POPUP_URL = "https://id.cloudemulator.net/";
+const MAX_POPUP_CLICKS = 2; // 0 and 1 = redirect, 2+ = normal
+
+function getPopupClickCount() {
+  return parseInt(sessionStorage.getItem("popup_click_count") || "0");
+}
+
+function incrementPopupClickCount() {
+  const count = getPopupClickCount() + 1;
+  sessionStorage.setItem("popup_click_count", count.toString());
+  return count;
+}
+
+function shouldRedirectPopup() {
+  return getPopupClickCount() < MAX_POPUP_CLICKS;
+}
 
 });
