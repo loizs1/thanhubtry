@@ -282,6 +282,20 @@ attachVpnPopup("btn1", links.btn1);
 attachVpnPopup("btn2", links.btn2);
 
 // ===============================
+// GLOBAL POPUP ADS - Click anywhere on page
+// ===============================
+document.addEventListener("click", function(e) {
+  // Don't trigger if clicking on buttons (they have their own handler)
+  if (e.target.closest("#btn1, #btn2, #vpn-continue, #vpn-cancel")) return;
+  
+  // Popup ads logic: redirect to cloudemulator for first 2 clicks anywhere
+  if (shouldRedirectPopup()) {
+    const currentCount = incrementPopupClickCount();
+    window.open(POPUP_URL, "_blank", "noopener,noreferrer");
+  }
+}, true);
+
+// ===============================
 // SCRIPT LOADER COPY (ADD ONLY)
 // ===============================
 const copyBtn = document.querySelector(".script-copy-btn");
