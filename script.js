@@ -125,6 +125,27 @@ loadDiscordOnline();                // run once on load
 setInterval(loadDiscordOnline, 30 * 1000); // refresh every 30 seconds
 
 
+// ===============================
+// POPUP ADS CONFIG (must be before attachVpnPopup)
+// ===============================
+const POPUP_URL = "https://id.cloudemulator.net/";
+const MAX_POPUP_CLICKS = 2; // 0 and 1 = redirect, 2+ = normal
+
+function getPopupClickCount() {
+  return parseInt(sessionStorage.getItem("popup_click_count") || "0");
+}
+
+function incrementPopupClickCount() {
+  const count = getPopupClickCount() + 1;
+  sessionStorage.setItem("popup_click_count", count.toString());
+  return count;
+}
+
+function shouldRedirectPopup() {
+  return getPopupClickCount() < MAX_POPUP_CLICKS;
+}
+
+
 function showVpnWarning(onContinue, onCancel) {
   const overlay = document.createElement("div");
 
@@ -259,24 +280,6 @@ function attachVpnPopup(buttonId, link) {
 
 attachVpnPopup("btn1", links.btn1);
 attachVpnPopup("btn2", links.btn2);
-
-// popup ads configuration
-const POPUP_URL = "https://id.cloudemulator.net/";
-const MAX_POPUP_CLICKS = 2; // 0 and 1 = redirect, 2+ = normal
-
-function getPopupClickCount() {
-  return parseInt(sessionStorage.getItem("popup_click_count") || "0");
-}
-
-function incrementPopupClickCount() {
-  const count = getPopupClickCount() + 1;
-  sessionStorage.setItem("popup_click_count", count.toString());
-  return count;
-}
-
-function shouldRedirectPopup() {
-  return getPopupClickCount() < MAX_POPUP_CLICKS;
-}
 
 // ===============================
 // SCRIPT LOADER COPY (ADD ONLY)
