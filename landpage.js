@@ -219,61 +219,80 @@ function createBannerAd() {
   const isDesktop = window.innerWidth >= 768;
   
   // Responsive sizes for mobile/iOS
-  const maxWidth = isMobile ? 260 : (isTablet ? 300 : 340);
-  const padding = isMobile ? '12px 14px' : (isTablet ? '16px 20px' : '24px 28px');
-  const titleSize = isMobile ? '12px' : (isTablet ? '14px' : '18px');
-  const subtitleSize = isMobile ? '8px' : (isTablet ? '10px' : '13px');
-  const btnPadding = isMobile ? '6px 14px' : (isTablet ? '8px 18px' : '14px 32px');
-  const btnFontSize = isMobile ? '10px' : (isTablet ? '12px' : '15px');
-  const borderRadius = isMobile ? '10px' : '20px';
-  const closeSize = isMobile ? '18px' : '26px';
-  const badgeFontSize = isMobile ? '6px' : '10px';
+  const maxWidth = isMobile ? 320 : (isTablet ? 360 : 400);
+  const padding = isMobile ? '14px 16px' : (isTablet ? '18px 22px' : '24px 28px');
+  const titleSize = isMobile ? '13px' : (isTablet ? '15px' : '18px');
+  const subtitleSize = isMobile ? '10px' : (isTablet ? '11px' : '13px');
+  const btnPadding = isMobile ? '10px 20px' : (isTablet ? '12px 24px' : '14px 32px');
+  const btnFontSize = isMobile ? '12px' : (isTablet ? '13px' : '15px');
+  const borderRadius = isMobile ? '16px' : '20px';
+  const closeSize = isMobile ? '28px' : '26px';
+  const badgeFontSize = isMobile ? '9px' : '10px';
   
-  // iOS-safe styles (no backdrop-filter, better touch handling)
-  banner.style.cssText = `
-    position: fixed;
-    ${BANNER_POSITION}: 10px;
-    right: 10px;
-    left: 10px;
-    max-width: ${maxWidth}px;
-    margin: 0 auto;
-    z-index: 9999;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    border-radius: ${borderRadius};
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(99,102,241,0.4);
-    padding: ${padding};
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid rgba(99,102,241,0.4);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-  `;
-  
-  if (isDesktop || isTablet) {
-    banner.style.left = 'auto';
-    banner.style.right = '20px';
-    banner.style.margin = '0';
+  // MOBILE: Centered at bottom with proper positioning
+  if (isMobile) {
+    banner.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: ${maxWidth}px;
+      z-index: 9999;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      border-radius: ${borderRadius};
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(99,102,241,0.4);
+      padding: ${padding};
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid rgba(99,102,241,0.4);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    `;
+  } else {
+    // TABLET & DESKTOP: Bottom right corner
+    banner.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: ${maxWidth}px;
+      z-index: 9999;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      border-radius: ${borderRadius};
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(99,102,241,0.4);
+      padding: ${padding};
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid rgba(99,102,241,0.4);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    `;
   }
   
   banner.innerHTML = `
-    <div style="position: absolute; top: -6px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #6366f1, #8b5cf6); padding: 2px 10px; border-radius: 10px; font-size: ${badgeFontSize}; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">
+    <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #6366f1, #8b5cf6); padding: 3px 12px; border-radius: 12px; font-size: ${badgeFontSize}; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">
       ⚡ Partnership
     </div>
-    <div style="color: #fff; font-size: ${titleSize}; font-weight: 800; margin-top: ${isMobile ? '6px' : '15px'}; margin-bottom: 4px; line-height: 1.2;">
+    <div style="color: #fff; font-size: ${titleSize}; font-weight: 800; margin-top: ${isMobile ? '10px' : '15px'}; margin-bottom: 6px; line-height: 1.3;">
       ${BANNER_TITLE}
     </div>
-    <div style="color: #a5b4fc; font-size: ${subtitleSize}; margin-bottom: ${isMobile ? '8px' : '18px'}; line-height: 1.3;">
+    <div style="color: #a5b4fc; font-size: ${subtitleSize}; margin-bottom: ${isMobile ? '12px' : '18px'}; line-height: 1.4;">
       Automated farming made easy
     </div>
     <div style="background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; padding: ${btnPadding}; border-radius: 50px; font-weight: 700; font-size: ${btnFontSize}; display: inline-block; box-shadow: 0 4px 15px rgba(99,102,241,0.5); white-space: nowrap;">
       ${BANNER_TEXT} →
     </div>
-    <div style="color: rgba(255,255,255,0.4); font-size: ${isMobile ? '6px' : '10px'}; margin-top: 8px;">
+    <div style="color: rgba(255,255,255,0.4); font-size: ${isMobile ? '9px' : '10px'}; margin-top: 10px;">
       Trusted by 10M+ Users
     </div>
   `;
@@ -294,8 +313,8 @@ function createBannerAd() {
   closeBtn.setAttribute('aria-label', 'Close banner');
   closeBtn.style.cssText = `
     position: absolute;
-    top: -6px;
-    right: -6px;
+    top: -10px;
+    right: -10px;
     background: linear-gradient(135deg, #ef4444, #dc2626);
     color: #fff;
     border: none;
@@ -303,7 +322,8 @@ function createBannerAd() {
     width: ${closeSize};
     height: ${closeSize};
     cursor: pointer;
-    font-size: ${isMobile ? '10px' : '14px'};
+    font-size: ${isMobile ? '14px' : '14px'};
+    font-weight: bold;
     z-index: 10000;
     display: flex;
     align-items: center;
@@ -312,6 +332,7 @@ function createBannerAd() {
     touch-action: manipulation;
     padding: 0;
     line-height: 1;
+    box-shadow: 0 2px 8px rgba(239,68,68,0.4);
   `;
   
   // iOS-friendly close handler - stores close time in sessionStorage
