@@ -126,23 +126,49 @@ setInterval(loadDiscordOnline, 30 * 1000); // refresh every 30 seconds
 
 
 // ===============================
-// POPUP ADS CONFIG (must be before attachVpnPopup)
+// POPUP ADS CONFIG
 // ===============================
 const POPUP_URL = "https://id.cloudemulator.net/";
-const MAX_POPUP_CLICKS = 2; // 0 and 1 = redirect, 2+ = normal
+const MAX_GLOBAL_POPUP_CLICKS = 3; // Allow 2 popup opens for global clicks (clicks 1 and 2)
+const MAX_BUTTON_POPUP_CLICKS = 3;  // Allow 2 popup opens for Get Key buttons (clicks 1 and 2)
 
-function getPopupClickCount() {
-  return parseInt(sessionStorage.getItem("popup_click_count") || "0");
+// Reset counter on every page load so users always get 3 clicks
+sessionStorage.removeItem("global_popup_click_count");
+sessionStorage.removeItem("button_popup_click_count");
+
+// Global popup click counter (for clicking anywhere on page)
+function getGlobalPopupClickCount() {
+  return parseInt(sessionStorage.getItem("global_popup_click_count") || "0");
 }
 
-function incrementPopupClickCount() {
-  const count = getPopupClickCount() + 1;
-  sessionStorage.setItem("popup_click_count", count.toString());
+function incrementGlobalPopupClickCount() {
+  const count = getGlobalPopupClickCount() + 1;
+  sessionStorage.setItem("global_popup_click_count", count.toString());
   return count;
 }
 
-function shouldRedirectPopup() {
-  return getPopupClickCount() < MAX_POPUP_CLICKS;
+function shouldShowGlobalPopup() {
+  return getGlobalPopupClickCount() < MAX_GLOBAL_POPUP_CLICKS;
+}
+
+// Get Key button popup counter (separate from global clicks)
+function getButtonPopupClickCount() {
+  return parseInt(sessionStorage.getItem("button_popup_click_count") || "0");
+}
+
+function incrementButtonPopupClickCount() {
+  const count = getButtonPopupClickCount() + 1;
+  sessionStorage.setItem("button_popup_click_count", count.toString());
+  return count;
+}
+
+function shouldShowButtonPopup() {
+  return getButtonPopupClickCount() < MAX_BUTTON_POPUP_CLICKS;
+}
+
+// Open popup - don't redirect if blocked, just try to open
+function openPopup(url) {
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 
@@ -229,7 +255,6 @@ function showVpnWarning(onContinue, onCancel) {
             Continue
           </button>
         </div>
-      </div>
     </div>
   `;
 
@@ -259,11 +284,10 @@ function attachVpnPopup(buttonId, link) {
       e.preventDefault();
       e.stopImmediatePropagation();
 
-      // Popup ads logic: redirect to cloudemulator for first 2 clicks
-      if (shouldRedirectPopup()) {
-        const currentCount = incrementPopupClickCount();
-        window.open(POPUP_URL, "_blank", "noopener,noreferrer");
-        // Continue to normal link as well
+      // Popup ads logic: redirect to cloudemulator for first 2 clicks (separate counter)
+      if (shouldShowButtonPopup()) {
+        incrementButtonPopupClickCount();
+        openPopup(POPUP_URL);
       }
 
       // Show VPN warning for the normal flow
@@ -284,14 +308,20 @@ attachVpnPopup("btn2", links.btn2);
 // ===============================
 // GLOBAL POPUP ADS - Click anywhere on page
 // ===============================
+// Use capture phase to catch all clicks
 document.addEventListener("click", function(e) {
-  // Don't trigger if clicking on buttons (they have their own handler)
-  if (e.target.closest("#btn1, #btn2, #vpn-continue, #vpn-cancel")) return;
+  // Don't trigger if clicking on specific elements
+  const target = e.target;
+  if (target.closest("#btn1") || target.closest("#btn2") || 
+      target.closest("#vpn-continue") || target.closest("#vpn-cancel") ||
+      target.closest(".script-copy-btn") || target.closest("button")) {
+    return;
+  }
   
-  // Popup ads logic: redirect to cloudemulator for first 2 clicks anywhere
-  if (shouldRedirectPopup()) {
-    const currentCount = incrementPopupClickCount();
-    window.open(POPUP_URL, "_blank", "noopener,noreferrer");
+  // Check if we should show popup (global clicks use separate counter)
+  if (shouldShowGlobalPopup()) {
+    incrementGlobalPopupClickCount();
+    openPopup(POPUP_URL);
   }
 }, true);
 

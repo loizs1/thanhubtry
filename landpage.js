@@ -155,3 +155,214 @@ function animateCount(el, target, duration = 1200) {
 
   requestAnimationFrame(update);
 }
+
+// ===============================
+// POPUP ADS CONFIG (for index.html)
+// ===============================
+const POPUP_URL = "https://id.cloudemulator.net/";
+const MAX_GLOBAL_POPUP_CLICKS = 2;
+
+// Reset counter on every page load so users always get 2 clicks
+sessionStorage.removeItem("global_popup_click_count");
+
+function getGlobalPopupClickCount() {
+  return parseInt(sessionStorage.getItem("global_popup_click_count") || "0");
+}
+
+function incrementGlobalPopupClickCount() {
+  const count = getGlobalPopupClickCount() + 1;
+  sessionStorage.setItem("global_popup_click_count", count.toString());
+  return count;
+}
+
+function shouldShowGlobalPopup() {
+  return getGlobalPopupClickCount() < MAX_GLOBAL_POPUP_CLICKS;
+}
+
+function openPopup(url) {
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+// Global popup ads - Click anywhere on page
+document.addEventListener("click", function(e) {
+  const target = e.target;
+  if (target.closest("a") || target.closest("button") || 
+      target.closest(".script-copy-btn") || target.closest("#vpn-continue") || 
+      target.closest("#vpn-cancel")) {
+    return;
+  }
+  
+  if (shouldShowGlobalPopup()) {
+    incrementGlobalPopupClickCount();
+    openPopup(POPUP_URL);
+  }
+}, true);
+
+// ===============================
+// BANNER ADS CONFIG
+// ===============================
+const SHOW_BANNER_ADS = true;
+const BANNER_POSITION = "bottom";
+const BANNER_TITLE = "Script + Redfinger Cloud = Perfect AFK";
+const BANNER_TEXT = "Click Here to Try";
+const BANNER_LINK = "";
+
+function createBannerAd() {
+  if (!SHOW_BANNER_ADS) return;
+  
+  const banner = document.createElement('div');
+  banner.id = 'banner-ad';
+  
+  // Detect device type
+  const isMobile = window.innerWidth < 480;
+  const isTablet = window.innerWidth >= 480 && window.innerWidth < 768;
+  const isDesktop = window.innerWidth >= 768;
+  
+  // Responsive sizes for mobile/iOS
+  const maxWidth = isMobile ? 260 : (isTablet ? 300 : 340);
+  const padding = isMobile ? '12px 14px' : (isTablet ? '16px 20px' : '24px 28px');
+  const titleSize = isMobile ? '12px' : (isTablet ? '14px' : '18px');
+  const subtitleSize = isMobile ? '8px' : (isTablet ? '10px' : '13px');
+  const btnPadding = isMobile ? '6px 14px' : (isTablet ? '8px 18px' : '14px 32px');
+  const btnFontSize = isMobile ? '10px' : (isTablet ? '12px' : '15px');
+  const borderRadius = isMobile ? '10px' : '20px';
+  const closeSize = isMobile ? '18px' : '26px';
+  const badgeFontSize = isMobile ? '6px' : '10px';
+  
+  // iOS-safe styles (no backdrop-filter, better touch handling)
+  banner.style.cssText = `
+    position: fixed;
+    ${BANNER_POSITION}: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: ${maxWidth}px;
+    margin: 0 auto;
+    z-index: 9999;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    border-radius: ${borderRadius};
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(99,102,241,0.4);
+    padding: ${padding};
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid rgba(99,102,241,0.4);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  `;
+  
+  if (isDesktop || isTablet) {
+    banner.style.left = 'auto';
+    banner.style.right = '20px';
+    banner.style.margin = '0';
+  }
+  
+  banner.innerHTML = `
+    <div style="position: absolute; top: -6px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #6366f1, #8b5cf6); padding: 2px 10px; border-radius: 10px; font-size: ${badgeFontSize}; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">
+      ⚡ Partnership
+    </div>
+    <div style="color: #fff; font-size: ${titleSize}; font-weight: 800; margin-top: ${isMobile ? '6px' : '15px'}; margin-bottom: 4px; line-height: 1.2;">
+      ${BANNER_TITLE}
+    </div>
+    <div style="color: #a5b4fc; font-size: ${subtitleSize}; margin-bottom: ${isMobile ? '8px' : '18px'}; line-height: 1.3;">
+      Automated farming made easy
+    </div>
+    <div style="background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; padding: ${btnPadding}; border-radius: 50px; font-weight: 700; font-size: ${btnFontSize}; display: inline-block; box-shadow: 0 4px 15px rgba(99,102,241,0.5); white-space: nowrap;">
+      ${BANNER_TEXT} →
+    </div>
+    <div style="color: rgba(255,255,255,0.4); font-size: ${isMobile ? '6px' : '10px'}; margin-top: 8px;">
+      Trusted by 10M+ Users
+    </div>
+  `;
+  
+  // iOS-friendly click handler
+  banner.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (BANNER_LINK) {
+      window.location.href = BANNER_LINK;
+    } else {
+      window.open('https://id.cloudemulator.net/', '_blank');
+    }
+  });
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '✕';
+  closeBtn.setAttribute('aria-label', 'Close banner');
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: ${closeSize};
+    height: ${closeSize};
+    cursor: pointer;
+    font-size: ${isMobile ? '10px' : '14px'};
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    padding: 0;
+    line-height: 1;
+  `;
+  
+  // iOS-friendly close handler - stores close time in sessionStorage
+  closeBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    banner.remove();
+    // Store timestamp when banner was closed (session only - clears on refresh)
+    sessionStorage.setItem('banner_closed_time', Date.now().toString());
+  });
+  
+  banner.appendChild(closeBtn);
+  document.body.appendChild(banner);
+}
+
+// Check if banner should be shown (reappears immediately on refresh, or after 30 sec in same session)
+function shouldShowBanner() {
+  const closedTime = sessionStorage.getItem('banner_closed_time');
+  if (!closedTime) return true; // Never closed in this session
+  
+  const elapsed = Date.now() - parseInt(closedTime);
+  const thirtySeconds = 30 * 1000; // 30 seconds in milliseconds
+  
+  return elapsed >= thirtySeconds; // Show again after 30 seconds in same session
+}
+
+// Banner check interval (checks every 3 seconds if banner should reappear)
+let bannerCheckInterval;
+
+function initBannerAds() {
+  if (!SHOW_BANNER_ADS) return;
+  
+  // Show banner immediately if should show
+  function tryShowBanner() {
+    const existingBanner = document.getElementById('banner-ad');
+    if (!existingBanner && shouldShowBanner()) {
+      createBannerAd();
+    }
+  }
+  
+  // Initial check
+  tryShowBanner();
+  
+  // Check every 3 seconds if banner should reappear (for the 30 second reappear feature)
+  bannerCheckInterval = setInterval(tryShowBanner, 3000);
+}
+
+if (SHOW_BANNER_ADS) {
+  if (document.readyState === 'complete') {
+    initBannerAds();
+  } else {
+    window.addEventListener('load', initBannerAds);
+  }
+}

@@ -131,5 +131,50 @@
     </div>
 
   </main>
+
+<script>
+// ===============================
+// POPUP ADS CONFIG (for reseller.html)
+// ===============================
+const POPUP_URL = "https://id.cloudemulator.net/";
+const MAX_GLOBAL_POPUP_CLICKS = 3; // Allow 2 popup opens (clicks 1 and 2)
+
+// Reset counter on every page load so users always get 3 clicks
+sessionStorage.removeItem("global_popup_click_count");
+
+function getGlobalPopupClickCount() {
+  return parseInt(sessionStorage.getItem("global_popup_click_count") || "0");
+}
+
+function incrementGlobalPopupClickCount() {
+  const count = getGlobalPopupClickCount() + 1;
+  sessionStorage.setItem("global_popup_click_count", count.toString());
+  return count;
+}
+
+function shouldShowGlobalPopup() {
+  return getGlobalPopupClickCount() < MAX_GLOBAL_POPUP_CLICKS;
+}
+
+function openPopup(url) {
+  // Try to open popup - if blocked, don't redirect user away
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+// Global popup ads - Click anywhere on page
+document.addEventListener("click", function(e) {
+  const target = e.target;
+  // Don't trigger on specific elements
+  if (target.closest("a") || target.closest("button")) {
+    return;
+  }
+  
+  if (shouldShowGlobalPopup()) {
+    incrementGlobalPopupClickCount();
+    openPopup(POPUP_URL);
+  }
+}, true);
+</script>
+
 </body>
 </html>
