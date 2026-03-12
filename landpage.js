@@ -162,8 +162,9 @@ function animateCount(el, target, duration = 1200) {
 const POPUP_URL = "https://id.cloudemulator.net/";
 const MAX_GLOBAL_POPUP_CLICKS = 2;
 
-// Reset counter on every page load so users always get 2 clicks
+// Reset counters on every page load so banner appears immediately and popups reset
 sessionStorage.removeItem("global_popup_click_count");
+sessionStorage.removeItem("banner_closed_time");
 
 function getGlobalPopupClickCount() {
   return parseInt(sessionStorage.getItem("global_popup_click_count") || "0");
